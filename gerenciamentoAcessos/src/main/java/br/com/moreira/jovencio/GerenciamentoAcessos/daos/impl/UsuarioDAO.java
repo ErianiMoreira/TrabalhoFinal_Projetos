@@ -2,50 +2,282 @@
 package br.com.moreira.jovencio.GerenciamentoAcessos.daos.impl;
 
 import br.com.moreira.jovencio.GerenciamentoAcessos.daos.IUsuarioDAO;
+import br.com.moreira.jovencio.GerenciamentoAcessos.daos.conexoes.SQLiteBancoDadosConexao;
+import br.com.moreira.jovencio.GerenciamentoAcessos.models.dtos.UsuarioGridDTO;
 import br.com.moreira.jovencio.GerenciamentoAcessos.models.entities.Usuario;
+import br.com.moreira.jovencio.GerenciamentoAcessos.services.ValidarCampo;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
  * @author marlan
  */
-public class UsuarioDAO implements IUsuarioDAO {
+public class UsuarioDAO extends SQLiteBancoDadosConexao implements IUsuarioDAO {
+
+	protected final Logger log = LoggerFactory.getLogger( UsuarioDAO.class );
 
 	@Override
-	public Usuario findByLoginAndSenha( String login, String senha ) {
-		var usuario = new Usuario();
-		usuario.setId( 1 );
-		usuario.setNome( "Marlan" );
-		usuario.setSobrenome( "Tonoli Jovencio" );
-		usuario.setEmail( "marlan.jovencio@edu.ufes.br" );
-		usuario.setLogin( "marlan.jovencio" );
-		usuario.setSenha( "senha.123" );
+	public void createTable() throws Exception {
+		var sql = new StringBuilder();
+
+		sql.append( " create table if not exists usuarios( " );
+		sql.append( "     id integer primary key autoincrement, " );
+		sql.append( "     nome varchar(50) not null, " );
+		sql.append( "     sobrenome varchar(100) not null, " );
+		sql.append( "     email varchar(150) null, " );
+		sql.append( "     login varchar(50) not null, " );
+		sql.append( "     senha varchar(75) null, " );
+		sql.append( "     permissoes text null, " );
+		sql.append( "     dataCadastro datetime null, " );
+		sql.append( "     dataAutorizado datetime null " );
+		sql.append( " ); " );
+
+		log.info( sql.toString() );
+
+		var statement = openConnection().createStatement();
+		statement.execute( sql.toString() );
+		closeConnection( statement.getConnection() );
+	}
+
+	@Override
+	public Usuario findByLoginAndSenha( String login, String senha ) throws Exception {
+		var sql = new StringBuilder();
+
+		sql.append( " select " );
+		sql.append( appendTodasColunas() );
+		sql.append( " from usuarios u " );
+		sql.append( " where u.login = '" ).append( login ).append( "' " );
+		sql.append( "   and u.senha = '" ).append( senha ).append( "' " );
+
+		var statement = openConnection().createStatement();
+		log.info( sql.toString() );
+		var result = statement.executeQuery( sql.toString() );
+		result.next();
+		var usuario = recuperaTodasColunas( result );
+		closeConnection( statement.getConnection() );
+		if( Integer.compare( usuario.getId(), 0 ) == 0 ) {
+			return null;
+		}
 		return usuario;
 	}
 
-	public boolean existeUsuarioComLogin( String login ) {
-		return false;
+	@Override
+	public boolean existeUsuarioComLogin( String login ) throws SQLException {
+		var sql = new StringBuilder();
+
+		sql.append( " select u.id as id " );
+		sql.append( " from usuarios u " );
+		sql.append( " where u.login = '" ).append( login ).append( "' " );
+
+		var statement = openConnection().createStatement();
+		statement.setMaxRows( 1 );
+		log.info( sql.toString() );
+		var result = statement.executeQuery( sql.toString() );
+		result.next();
+		var idExistente = result.getInt( "id" );
+		closeConnection( statement.getConnection() );
+		return Integer.compare( idExistente, 0 ) != 0;
 	}
 
 	@Override
-	public Usuario insert( Usuario entity ) {
-		return findByLoginAndSenha( "", "" );
+	public Usuario insert( Usuario entity ) throws SQLException {
+		var sql = new StringBuilder();
+
+		sql.append( " insert into usuarios( " );
+		sql.append( "     nome, " );
+		sql.append( "     sobrenome, " );
+		sql.append( "     login, " );
+		sql.append( "     email, " );
+		sql.append( "     senha, " );
+		sql.append( "     permissoes, " );
+		sql.append( "     dataCadastro, " );
+		sql.append( "     dataAutorizado " );
+		sql.append( " ) " );
+		sql.append( " values ( " );
+		sql.append( "     '" ).append( entity.getNome() ).append( "', " );
+		sql.append( "     '" ).append( entity.getSobrenome() ).append( "', " );
+		sql.append( "     '" ).append( entity.getLogin() ).append( "', " );
+		if( ValidarCampo.isNotNullVazioOrEspacos( entity.getEmail() ) ) {
+			sql.append( "     '" ).append( entity.getLogin() ).append( "', " );
+		} else {
+			sql.append( "     null, " );
+		}
+		sql.append( "     '" ).append( entity.getSenha() ).append( "', " );
+		if( entity.getPermissoes() != null && !entity.getPermissoes().isEmpty() ) {
+			sql.append( "     '" ).append( String.join( ";", entity.getPermissoes() ) ).append( "', " );
+		} else {
+			sql.append( "     null, " );
+		}
+		sql.append( "     '" ).append( entity.getDataCadastro().format( DATE_TIME_PATTERN ) ).append( "', " );
+		if( entity.getDataAutorizado() != null ) {
+			sql.append( "     '" ).append( entity.getDataAutorizado().format( DATE_TIME_PATTERN ) ).append( "' " );
+		} else {
+			sql.append( "     null " );
+		}
+		sql.append( " ); " );
+
+		var id = super.insert( sql.toString() );
+		entity.setId( id );
+		return entity;
 	}
 
 	@Override
-	public Usuario get( int id ) {
-		throw new UnsupportedOperationException( "Not supported yet." ); // Generated from
-																			// nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+	public Usuario get( int id ) throws SQLException {
+		var sql = new StringBuilder();
+
+		sql.append( " select " );
+		sql.append( appendTodasColunas() );
+		sql.append( " from usuarios u " );
+		sql.append( " where u.id = " ).append( id ).append( " " );
+
+		log.info( sql.toString() );
+		var statement = openConnection().createStatement();
+		var result = statement.executeQuery( sql.toString() );
+		result.next();
+		var usuario = recuperaTodasColunas( result );
+		closeConnection( statement.getConnection() );
+		if( Integer.compare( usuario.getId(), 0 ) == 0 ) {
+			return null;
+		}
+		return usuario;
 	}
 
 	@Override
-	public void update( int id, Usuario entity ) {
-		throw new UnsupportedOperationException( "Not supported yet." ); // Generated from
-																			// nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+	public void update( int id, Usuario entity ) throws SQLException {
+		var sql = new StringBuilder();
+
+		sql.append( " update usuarios set " );
+		sql.append( "     nome = '" ).append( entity.getNome() ).append( "', " );
+		sql.append( "     sobrenome = '" ).append( entity.getSobrenome() ).append( "', " );
+		sql.append( "     email = '" ).append( entity.getEmail() ).append( "' " );
+		sql.append( " where id = " ).append( id );
+		sql.append( " ; " );
+
+		log.info( sql.toString() );
+		var statement = openConnection().createStatement();
+		statement.executeUpdate( sql.toString() );
+		closeConnection( statement.getConnection() );
 	}
 
 	@Override
-	public void delete( int id ) {
-		throw new UnsupportedOperationException( "Not supported yet." ); // Generated from
-																			// nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+	public void delete( int id ) throws SQLException {
+		var sql = new StringBuilder();
+
+		sql.append( " delete from usuarios " );
+		sql.append( " where id = " ).append( id );
+
+		log.info( sql.toString() );
+
+		var statement = openConnection().createStatement();
+		statement.executeUpdate( sql.toString() );
+		closeConnection( statement.getConnection() );
+	}
+
+	@Override
+	public List<UsuarioGridDTO> search( String nome, Boolean possuiNotificacoes ) throws Exception {
+		var sql = new StringBuilder();
+		sql.append( " select " );
+		sql.append( "     u.id, " );
+		sql.append( "     concat(u.nome, ' ', u.sobrenome) as nomeCompleto, " );
+		sql.append( "     u.dataCadastro, " );
+		sql.append( "     count(n.id) as notificacoesEnviadas, " );
+		sql.append( "     count(n.id) filter (where n.lida is true) as notificacoesLidas, " );
+		sql.append( "     u.dataAutorizado " );
+		sql.append( " from usuarios u " );
+		sql.append( " left join notificacoes n on n.paraUsuarioId = u.id " );
+		sql.append( " where 1=1 " );
+		if( ValidarCampo.isNotNullVazioOrEspacos( nome ) ) {
+			sql.append( "   and (upper(u.nome) like '%' || '" ).append( nome.toUpperCase() ).append( "' || '%' " );
+			sql.append( "     or upper(u.sobrenome) like '%' || '" ).append( nome.toUpperCase() ).append( "' || '%' ) " );
+		}
+
+		if( possuiNotificacoes != null ) {
+			sql.append( "   and " ).append( !possuiNotificacoes ? "not" : "" ).append( " exists (select 1 from notificacoes n2 where n2.paraUsuarioId = u.id and n2.lida is false) " );
+		}
+		sql.append( " group by 1 " );
+
+		log.info( sql.toString() );
+		var statement = openConnection().createStatement();
+		var result = statement.executeQuery( sql.toString() );
+		List<UsuarioGridDTO> linhas = new ArrayList<>();
+		while( result.next() ) {
+			var linha = mapUsuarioGridDTO( result );
+			if( linha != null && Integer.compare( linha.getId(), 0 ) != 0 ) {
+				linhas.add( linha );
+			}
+		}
+		closeConnection( statement.getConnection() );
+		return linhas;
+	}
+
+	@Override
+	public int getCountUsuarios() throws Exception {
+		var sql = new StringBuilder();
+
+		sql.append( " select count(u.id) as countUsuarios " );
+		sql.append( " from usuarios u " );
+		var statement = openConnection().createStatement();
+		log.info( sql.toString() );
+		var result = statement.executeQuery( sql.toString() );
+		result.next();
+		var countUsuarios = result.getInt( "countUsuarios" );
+		closeConnection( statement.getConnection() );
+		return countUsuarios;
+	}
+
+	private String appendTodasColunas() {
+		var sql = new StringBuilder();
+		sql.append( "     u.id, " );
+		sql.append( "     u.nome, " );
+		sql.append( "     u.sobrenome, " );
+		sql.append( "     u.email, " );
+		sql.append( "     u.login, " );
+		sql.append( "     u.senha, " );
+		sql.append( "     u.permissoes, " );
+		sql.append( "     u.dataCadastro, " );
+		sql.append( "     u.dataAutorizado " );
+		return sql.toString();
+	}
+
+	private Usuario recuperaTodasColunas( ResultSet result ) throws SQLException {
+		var id = result.getInt( "id" );
+		if( id == 0 ) {
+			return new Usuario( id );
+		}
+		var dataCadastro = LocalDateTime.parse( result.getString( "dataCadastro" ), DATE_TIME_PATTERN );
+		var usuario = new Usuario( id, dataCadastro );
+		usuario.setNome( result.getString( "nome" ) );
+		usuario.setSobrenome( result.getString( "sobrenome" ) );
+		usuario.setEmail( result.getString( "email" ) );
+		usuario.setLogin( result.getString( "login" ) );
+		usuario.setSenha( result.getString( "senha" ) );
+		var permissoesString = result.getString( "permissoes" );
+		usuario.setPermissoes( permissoesString != null ? Set.of( permissoesString.split( ";" ) ) : null );
+		var dataAutorizadoString = result.getString( "dataCadastro" );
+		usuario.setDataAutorizado( dataAutorizadoString == null ? null : LocalDateTime.parse( dataAutorizadoString, DATE_TIME_PATTERN ) );
+		return usuario;
+	}
+
+	private UsuarioGridDTO mapUsuarioGridDTO( ResultSet result ) throws SQLException {
+		var id = result.getInt( "id" );
+		if( id == 0 ) {
+			return null;
+		}
+		var usuario = new UsuarioGridDTO();
+		usuario.setId( id );
+		usuario.setNomeCompleto( result.getString( "nomeCompleto" ) );
+		usuario.setDataCadastro( LocalDateTime.parse( result.getString( "dataCadastro" ), DATE_TIME_PATTERN ) );
+		usuario.setNotificacoesEnviadas( result.getInt( "notificacoesEnviadas" ) );
+		usuario.setNotificacoesLidas( result.getInt( "notificacoesLidas" ) );
+		var dataAutorizadoString = result.getString( "dataAutorizado" );
+		usuario.setDataAutorizado( dataAutorizadoString == null ? null : LocalDateTime.parse( dataAutorizadoString, DATE_TIME_PATTERN ) );
+		return usuario;
 	}
 }

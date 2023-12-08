@@ -10,9 +10,11 @@ import javax.swing.WindowConstants;
  */
 public class AlterarSenhaPresenter {
 
-	private AlterarSenhaView view;
+	private final int usuarioLogadoId;
+	private final AlterarSenhaView view;
 
-	public AlterarSenhaPresenter() {
+	public AlterarSenhaPresenter( int usuarioLogadoId ) {
+		this.usuarioLogadoId = usuarioLogadoId;
 		view = new AlterarSenhaView();
 		view.setVisible( false );
 		view.setDefaultCloseOperation( WindowConstants.HIDE_ON_CLOSE );

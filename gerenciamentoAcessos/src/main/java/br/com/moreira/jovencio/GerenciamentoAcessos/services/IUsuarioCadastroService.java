@@ -12,5 +12,8 @@ public interface IUsuarioCadastroService {
 
 	public ControllerRetorno cadastrar( UsuarioCadastroDTO usuario );
 
-	public ControllerRetorno validar( UsuarioCadastroDTO usuario );
+	public ControllerRetorno validar( UsuarioCadastroDTO usuario ) throws Exception;
+
+	public ControllerRetorno autenticar( int usuarioId );
+
 }

@@ -42,14 +42,14 @@ public class NotificacoesUsuarioView extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Lida?", "Mensagem", "Ações"
+                "Id", "Lida?", "Data de Envio", "Mensagem", "Ações"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.Object.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class
             };
             boolean[] canEdit = new boolean [] {
-                false, true, true
+                false, false, false, false, true
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -63,6 +63,13 @@ public class NotificacoesUsuarioView extends javax.swing.JInternalFrame {
         tblNotificacoes.setFillsViewportHeight(true);
         tblNotificacoes.setRowHeight(40);
         jScrollPane2.setViewportView(tblNotificacoes);
+        if (tblNotificacoes.getColumnModel().getColumnCount() > 0) {
+            tblNotificacoes.getColumnModel().getColumn(0).setResizable(false);
+            tblNotificacoes.getColumnModel().getColumn(0).setPreferredWidth(6);
+            tblNotificacoes.getColumnModel().getColumn(1).setResizable(false);
+            tblNotificacoes.getColumnModel().getColumn(1).setPreferredWidth(12);
+            tblNotificacoes.getColumnModel().getColumn(2).setPreferredWidth(60);
+        }
 
         btnVoltar.setText("Voltar");
         btnVoltar.setPreferredSize(new java.awt.Dimension(120, 40));
@@ -79,7 +86,7 @@ public class NotificacoesUsuarioView extends javax.swing.JInternalFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(6, 6, 6)
                         .addComponent(lblNotificarUsuario)
-                        .addGap(0, 143, Short.MAX_VALUE)))
+                        .addGap(0, 380, Short.MAX_VALUE)))
                 .addGap(6, 6, 6))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
@@ -92,7 +99,7 @@ public class NotificacoesUsuarioView extends javax.swing.JInternalFrame {
                 .addGap(6, 6, 6)
                 .addComponent(lblNotificarUsuario)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 55, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
                 .addGap(6, 6, 6)
                 .addComponent(btnVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())

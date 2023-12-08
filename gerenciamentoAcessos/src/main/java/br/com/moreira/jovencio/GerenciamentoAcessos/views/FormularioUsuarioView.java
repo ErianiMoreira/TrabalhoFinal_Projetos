@@ -34,7 +34,7 @@ public class FormularioUsuarioView extends javax.swing.JInternalFrame {
         txtSobrenome = new javax.swing.JTextField();
         btnSalvar = new javax.swing.JButton();
         btnEditar = new javax.swing.JButton();
-        btnVoltar = new javax.swing.JButton();
+        btnResetarSenha = new javax.swing.JButton();
         btnExcluir = new javax.swing.JButton();
         btnAutorizar = new javax.swing.JButton();
 
@@ -66,8 +66,8 @@ public class FormularioUsuarioView extends javax.swing.JInternalFrame {
         btnEditar.setText("Editar");
         btnEditar.setPreferredSize(new java.awt.Dimension(120, 40));
 
-        btnVoltar.setText("Voltar");
-        btnVoltar.setPreferredSize(new java.awt.Dimension(120, 40));
+        btnResetarSenha.setText("Resetar Senha");
+        btnResetarSenha.setPreferredSize(new java.awt.Dimension(160, 40));
 
         btnExcluir.setText("Excluir");
         btnExcluir.setPreferredSize(new java.awt.Dimension(120, 40));
@@ -102,9 +102,9 @@ public class FormularioUsuarioView extends javax.swing.JInternalFrame {
                             .addComponent(txtSobrenome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addComponent(btnVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnResetarSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
                         .addComponent(btnAutorizar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -137,7 +137,7 @@ public class FormularioUsuarioView extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnResetarSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnAutorizar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(6, 6, 6))
@@ -150,8 +150,8 @@ public class FormularioUsuarioView extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnAutorizar;
     private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnExcluir;
+    private javax.swing.JButton btnResetarSenha;
     private javax.swing.JButton btnSalvar;
-    private javax.swing.JButton btnVoltar;
     private javax.swing.JLabel lblEmail;
     private javax.swing.JLabel lblLogin;
     private javax.swing.JLabel lblNome;
@@ -178,8 +178,8 @@ public class FormularioUsuarioView extends javax.swing.JInternalFrame {
 		return btnSalvar;
 	}
 
-	public JButton getBtnVoltar() {
-		return btnVoltar;
+	public JButton getBtnResetarSenha() {
+		return btnResetarSenha;
 	}
 
 	public JTextField getTxtEmail() {

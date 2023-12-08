@@ -2,6 +2,7 @@
 package br.com.moreira.jovencio.GerenciamentoAcessos.presenters;
 
 import br.com.moreira.jovencio.GerenciamentoAcessos.views.PrincipalView;
+import java.util.Optional;
 import javax.swing.JInternalFrame;
 
 /**
@@ -19,16 +20,23 @@ public class PrincipalPresenter {
 		return instancia;
 	}
 
+	private int usuarioLogadoId;
 	private PrincipalView view;
 	private ManterUsuariosPresenter manterUsuariosPresenter;
 	private NotificacoesUsuarioPresenter notificacoesPresenter;
 	private AlterarSenhaPresenter alterarSenhaPresenter;
 
 	private PrincipalPresenter() {
-		new LogarPresenter();
+		try {
+			new LogarPresenter();
+		} catch ( Exception ex ) {
+			ex.printStackTrace();
+			// TODO: tratar erro
+		}
 	}
 
 	public void show( Integer usuarioLogadoId ) {
+		this.usuarioLogadoId = usuarioLogadoId;
 		if( view == null ) {
 			configurarView();
 		}
@@ -40,37 +48,51 @@ public class PrincipalPresenter {
 	}
 
 	private void hide() {
-		if( view == null ) {
-			configurarView();
-		}
+		configurarView();
 		view.setVisible( false );
 	}
 
 	private void configurarView() {
-		view = new PrincipalView();
+		view = Optional.ofNullable( view ).orElse( new PrincipalView() );
 		view.getExitMenuItem().addActionListener( a -> sair() );
-		view.getBtnManterUsuarios().addActionListener( a -> manterUsuarios() );
-		view.getBtnNotificacoes().addActionListener( a -> gerenciarNotificacoes() );
+		view.getBtnManterUsuarios().addActionListener( a -> {
+			try {
+				manterUsuarios();
+			} catch ( Exception ex ) {
+				ex.printStackTrace();
+			}
+		} );
+		view.getBtnNotificacoes().addActionListener( a -> {
+			try {
+				gerenciarNotificacoes();
+			} catch ( Exception ex ) {
+				ex.printStackTrace();
+			}
+		} );
 		view.getBtnAlteracaoSenha().addActionListener( a -> alterarSenha() );
 	}
 
 	private void sair() {
 		hide();
-		new LogarPresenter();
+		try {
+			new LogarPresenter();
+		} catch ( Exception ex ) {
+			// TODO: tratar erro
+		}
 	}
 
-	private void manterUsuarios() {
+	private void manterUsuarios() throws Exception {
 		System.out.println( "br.com.moreira.jovencio.GerenciamentoAcessos.presenters.PrincipalPresenter.manterUsuarios()" );
 		if( manterUsuariosPresenter == null ) {
-			manterUsuariosPresenter = new ManterUsuariosPresenter();
+			manterUsuariosPresenter = new ManterUsuariosPresenter( usuarioLogadoId );
 		}
 		manterUsuariosPresenter.show();
 	}
 
-	private void gerenciarNotificacoes() {
+	private void gerenciarNotificacoes() throws Exception {
 		System.out.println( "br.com.moreira.jovencio.GerenciamentoAcessos.presenters.PrincipalPresenter.gerenciarNotificacoes()" );
 		if( notificacoesPresenter == null ) {
-			notificacoesPresenter = new NotificacoesUsuarioPresenter();
+			notificacoesPresenter = new NotificacoesUsuarioPresenter( usuarioLogadoId );
 		}
 		notificacoesPresenter.show();
 	}
@@ -78,7 +100,7 @@ public class PrincipalPresenter {
 	private void alterarSenha() {
 		System.out.println( "br.com.moreira.jovencio.GerenciamentoAcessos.presenters.PrincipalPresenter.alterarSenha()" );
 		if( alterarSenhaPresenter == null ) {
-			alterarSenhaPresenter = new AlterarSenhaPresenter();
+			alterarSenhaPresenter = new AlterarSenhaPresenter( usuarioLogadoId );
 		}
 		alterarSenhaPresenter.show();
 	}

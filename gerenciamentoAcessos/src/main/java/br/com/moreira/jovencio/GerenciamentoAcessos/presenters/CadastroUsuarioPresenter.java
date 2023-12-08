@@ -1,8 +1,12 @@
 
 package br.com.moreira.jovencio.GerenciamentoAcessos.presenters;
 
+import br.com.moreira.jovencio.GerenciamentoAcessos.models.dtos.ControllerRetorno;
 import br.com.moreira.jovencio.GerenciamentoAcessos.models.dtos.UsuarioCadastroDTO;
-import br.com.moreira.jovencio.GerenciamentoAcessos.services.impl.UsuarioCadastroService;
+import br.com.moreira.jovencio.GerenciamentoAcessos.services.INotificarPoPopupService;
+import br.com.moreira.jovencio.GerenciamentoAcessos.services.ValidarCampo;
+import br.com.moreira.jovencio.GerenciamentoAcessos.services.impl.NotificarPoPopupService;
+import br.com.moreira.jovencio.GerenciamentoAcessos.services.impl.CadastrarUsuarioService;
 import br.com.moreira.jovencio.GerenciamentoAcessos.views.CadastroUsuarioView;
 
 /**
@@ -12,10 +16,12 @@ import br.com.moreira.jovencio.GerenciamentoAcessos.views.CadastroUsuarioView;
 public class CadastroUsuarioPresenter {
 
 	private final CadastroUsuarioView view;
+	private final INotificarPoPopupService popup;
 
 	public CadastroUsuarioPresenter() {
 		view = new CadastroUsuarioView();
 		configurarView();
+		popup = new NotificarPoPopupService( view );
 		view.setVisible( true );
 	}
 
@@ -38,9 +44,15 @@ public class CadastroUsuarioPresenter {
 		dto.setEmail( view.getTxtEmail().getText() );
 		dto.setLogin( view.getTxtLogin().getText() );
 		dto.setSenha( String.valueOf( view.getPswConfirmarSenha().getPassword() ) );
-		var retorno = new UsuarioCadastroService().cadastrar( dto );
+		ControllerRetorno retorno;
+		try {
+			retorno = new CadastrarUsuarioService().cadastrar( dto );
+		} catch ( Exception ex ) {
+			// TODO: tratar erro
+			return;
+		}
 		if( !retorno.isSuccess() ) {
-			new ConfirmarDialogPresenter( view, "Campos com erros", retorno.getMensagem() );
+			popup.showPopupOk( "Campos com erros", retorno.getMensagem(), retorno.isError() ? "Erro" : "Alerta" );
 			return;
 		}
 		view.setVisible( false );
@@ -50,8 +62,8 @@ public class CadastroUsuarioPresenter {
 	private boolean validarSenhas() {
 		var senha = String.valueOf( view.getPswSenha().getPassword() );
 		var confirmarSenha = String.valueOf( view.getPswConfirmarSenha().getPassword() );
-		if( senha.compareTo( confirmarSenha ) != 0 ) {
-			new ConfirmarDialogPresenter( view, "Senhas incompativeis", "O Campo 'Senha' e o campo 'Confirmar Senha' não estão preenchidos com o mesmo valor!" );
+		if( ( ValidarCampo.isNotNullVazioOrEspacos( senha ) || ValidarCampo.isNotNullVazioOrEspacos( confirmarSenha ) ) && senha.compareTo( confirmarSenha ) != 0 ) {
+			popup.showPopupOk( "Senhas incompativeis", "O Campo 'Senha' e o campo 'Confirmar Senha' não estão preenchidos com o mesmo valor!", "erro" );
 			return false;
 		}
 		return true;
