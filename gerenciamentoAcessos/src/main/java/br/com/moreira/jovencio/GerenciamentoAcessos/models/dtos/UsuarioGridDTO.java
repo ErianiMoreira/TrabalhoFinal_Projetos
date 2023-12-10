@@ -6,7 +6,7 @@ import java.time.format.DateTimeFormatter;
 
 /**
  *
- * @author marlan
+ * @author marlan/eriani
  */
 public class UsuarioGridDTO {
 

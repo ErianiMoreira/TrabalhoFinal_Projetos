@@ -27,7 +27,7 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author marlan
+ * @author marlan/eriani
  */
 public class ManterUsuariosPresenter implements IUsuarioDAOObervador, INotificacaoDAOObservador {
 

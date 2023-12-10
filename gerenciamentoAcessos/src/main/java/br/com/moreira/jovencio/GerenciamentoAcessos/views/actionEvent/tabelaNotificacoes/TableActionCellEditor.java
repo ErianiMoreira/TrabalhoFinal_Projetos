@@ -8,7 +8,7 @@ import javax.swing.JTable;
 
 /**
  *
- * @author marlan
+ * @author marlan/eriani
  */
 public class TableActionCellEditor extends DefaultCellEditor {
 

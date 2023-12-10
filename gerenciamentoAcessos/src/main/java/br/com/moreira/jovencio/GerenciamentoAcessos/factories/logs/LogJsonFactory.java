@@ -6,7 +6,7 @@ import br.com.moreira.jovencio.GerenciamentoAcessos.services.log.impl.JsonLogSer
 
 /**
  *
- * @author marlan
+ * @author marlan/eriani
  */
 public class LogJsonFactory extends LogFactory {
 

@@ -8,7 +8,7 @@ import br.com.moreira.jovencio.GerenciamentoAcessos.daos.impl.UsuarioDAO;
 
 /**
  *
- * @author marlan
+ * @author marlan/eriani
  */
 public class SQLiteDAOFactory extends DAOFactory {
 

@@ -9,7 +9,7 @@ import br.com.moreira.jovencio.GerenciamentoAcessos.views.LogarView;
 
 /**
  *
- * @author marlan
+ * @author marlan/eriani
  */
 public class LogarPresenter {
 

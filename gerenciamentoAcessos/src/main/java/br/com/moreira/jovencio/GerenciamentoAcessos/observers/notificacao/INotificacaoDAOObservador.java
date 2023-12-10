@@ -3,7 +3,7 @@ package br.com.moreira.jovencio.GerenciamentoAcessos.observers.notificacao;
 
 /**
  *
- * @author marlan
+ * @author marlan/eriani
  */
 public interface INotificacaoDAOObservador {
 

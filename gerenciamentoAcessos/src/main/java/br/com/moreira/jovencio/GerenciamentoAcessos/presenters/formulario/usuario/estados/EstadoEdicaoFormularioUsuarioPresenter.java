@@ -13,7 +13,7 @@ import br.com.moreira.jovencio.GerenciamentoAcessos.services.repositories.impl.U
 
 /**
  *
- * @author marlan
+ * @author marlan/eriani
  */
 public class EstadoEdicaoFormularioUsuarioPresenter extends EstadoFormularioUsuarioPresenter {
 
@@ -37,7 +37,7 @@ public class EstadoEdicaoFormularioUsuarioPresenter extends EstadoFormularioUsua
 	public void autorizarUsuario() {
 		if( presenter.getUsuarioId() == presenter.getUsuarioLogadoId() ) {
 			var retorno = new ControllerRetorno();
-			retorno.setMensagem( "O usuário não pode ser atorizado por ele mesmo" );
+			retorno.setMensagem( "O usuário não pode ser autorizado por ele mesmo" );
 			presenter.showPopUpOk( retorno );
 			return;
 		}

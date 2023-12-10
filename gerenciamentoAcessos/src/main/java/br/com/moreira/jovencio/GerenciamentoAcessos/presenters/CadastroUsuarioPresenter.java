@@ -13,7 +13,7 @@ import br.com.moreira.jovencio.GerenciamentoAcessos.views.CadastroUsuarioView;
 
 /**
  *
- * @author marlan
+ * @author marlan/eriani
  */
 public class CadastroUsuarioPresenter {
 

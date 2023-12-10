@@ -3,7 +3,7 @@ package br.com.moreira.jovencio.GerenciamentoAcessos.services;
 
 /**
  *
- * @author marlan
+ * @author marlan/eriani
  */
 public interface IValidadorSenha {
 

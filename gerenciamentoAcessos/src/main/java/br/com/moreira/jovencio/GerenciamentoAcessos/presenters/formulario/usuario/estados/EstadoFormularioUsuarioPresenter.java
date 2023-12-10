@@ -5,7 +5,7 @@ import br.com.moreira.jovencio.GerenciamentoAcessos.presenters.formulario.usuari
 
 /**
  *
- * @author marlan
+ * @author marlan/eriani
  */
 public abstract class EstadoFormularioUsuarioPresenter {
 

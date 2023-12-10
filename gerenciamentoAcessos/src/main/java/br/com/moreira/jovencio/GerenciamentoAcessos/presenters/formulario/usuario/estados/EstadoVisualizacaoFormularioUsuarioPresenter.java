@@ -10,7 +10,7 @@ import br.com.moreira.jovencio.GerenciamentoAcessos.services.repositories.impl.U
 
 /**
  *
- * @author marlan
+ * @author marlan/eriani
  */
 public class EstadoVisualizacaoFormularioUsuarioPresenter extends EstadoFormularioUsuarioPresenter {
 

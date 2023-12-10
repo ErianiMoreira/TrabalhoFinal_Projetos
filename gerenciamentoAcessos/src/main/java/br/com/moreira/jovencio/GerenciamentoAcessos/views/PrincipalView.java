@@ -9,7 +9,7 @@ import javax.swing.JToolBar;
 
 /**
  *
- * @author marlan
+ * @author marlan/eriani
  */
 public class PrincipalView extends javax.swing.JFrame {
 

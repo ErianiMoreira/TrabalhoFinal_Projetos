@@ -5,7 +5,7 @@ import br.com.moreira.jovencio.GerenciamentoAcessos.services.AbstractValidarDado
 
 /**
  *
- * @author marlan
+ * @author marlan/eriani
  */
 public class ValidarDadosUsuarioAtualizacao extends AbstractValidarDadosUsuario {
 

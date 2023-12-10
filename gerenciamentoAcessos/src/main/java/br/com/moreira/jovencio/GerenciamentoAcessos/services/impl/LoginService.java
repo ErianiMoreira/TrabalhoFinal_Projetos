@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  *
- * @author marlan
+ * @author marlan/eriani
  */
 public class LoginService extends AbstractLogService implements ILoginService {
 

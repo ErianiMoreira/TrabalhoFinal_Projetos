@@ -5,7 +5,7 @@ import br.com.moreira.jovencio.GerenciamentoAcessos.models.entities.Usuario;
 
 /**
  *
- * @author marlan
+ * @author marlan/eriani
  */
 public interface ILogService {
 

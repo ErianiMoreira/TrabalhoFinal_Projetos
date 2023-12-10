@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  *
- * @author marlan
+ * @author marlan/eriani
  */
 public class CadastrarUsuarioService extends AbstractLogService implements ICadastrarUsuarioService {
 

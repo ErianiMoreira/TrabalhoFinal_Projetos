@@ -20,7 +20,7 @@ import java.util.List;
 
 /**
  *
- * @author marlan
+ * @author marlan/eriani
  */
 public class JsonLogService implements ILogService {
 

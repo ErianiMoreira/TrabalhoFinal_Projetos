@@ -7,7 +7,7 @@ import javax.swing.JTextField;
 
 /**
  *
- * @author marlan
+ * @author marlan/eriani
  */
 public class LogarView extends javax.swing.JFrame {
 

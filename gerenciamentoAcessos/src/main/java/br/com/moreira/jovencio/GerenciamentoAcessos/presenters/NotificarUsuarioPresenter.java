@@ -17,7 +17,7 @@ import javax.swing.event.InternalFrameEvent;
 
 /**
  *
- * @author marlan
+ * @author marlan/eriani
  */
 public class NotificarUsuarioPresenter {
 

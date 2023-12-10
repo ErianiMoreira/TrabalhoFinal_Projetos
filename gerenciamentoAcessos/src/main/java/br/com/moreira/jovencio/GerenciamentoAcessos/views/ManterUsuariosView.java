@@ -8,7 +8,7 @@ import javax.swing.JTextField;
 
 /**
  *
- * @author marlan
+ * @author marlan/eriani
  */
 public class ManterUsuariosView extends javax.swing.JInternalFrame {
 

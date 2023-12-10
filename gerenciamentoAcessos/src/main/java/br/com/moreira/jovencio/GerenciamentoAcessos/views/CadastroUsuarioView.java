@@ -8,7 +8,7 @@ import javax.swing.JToggleButton;
 
 /**
  *
- * @author marlan
+ * @author marlan/eriani
  */
 public class CadastroUsuarioView extends javax.swing.JFrame {
 

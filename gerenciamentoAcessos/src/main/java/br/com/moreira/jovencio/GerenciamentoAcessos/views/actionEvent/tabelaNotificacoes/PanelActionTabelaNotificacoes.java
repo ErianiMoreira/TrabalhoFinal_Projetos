@@ -5,7 +5,7 @@ import java.awt.event.ActionEvent;
 
 /**
  *
- * @author marlan
+ * @author marlan/eriani
  */
 public class PanelActionTabelaNotificacoes extends javax.swing.JPanel {
 

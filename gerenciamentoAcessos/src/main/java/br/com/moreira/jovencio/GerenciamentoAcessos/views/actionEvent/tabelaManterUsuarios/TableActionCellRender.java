@@ -9,7 +9,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 
 /**
  *
- * @author marlan
+ * @author marlan/eriani
  */
 public class TableActionCellRender extends DefaultTableCellRenderer {
 

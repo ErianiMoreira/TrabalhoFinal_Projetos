@@ -5,7 +5,7 @@ import br.com.moreira.jovencio.GerenciamentoAcessos.models.dtos.ControllerRetorn
 
 /**
  *
- * @author marlan
+ * @author marlan/eriani
  */
 public interface ILoginService {
 

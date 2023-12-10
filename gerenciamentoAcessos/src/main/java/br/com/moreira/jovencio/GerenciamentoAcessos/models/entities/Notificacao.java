@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 
 /**
  *
- * @author marlan
+ * @author marlan/eriani
  */
 public class Notificacao {
 

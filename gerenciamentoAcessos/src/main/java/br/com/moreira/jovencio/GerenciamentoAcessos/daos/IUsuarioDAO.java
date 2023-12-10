@@ -8,7 +8,7 @@ import java.util.List;
 
 /**
  *
- * @author marlan
+ * @author marlan/eriani
  */
 public interface IUsuarioDAO extends IUsuarioDAOObservavel {
 

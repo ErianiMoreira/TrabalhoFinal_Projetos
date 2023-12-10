@@ -6,7 +6,7 @@ import br.com.moreira.jovencio.GerenciamentoAcessos.services.log.impl.CsvLogServ
 
 /**
  *
- * @author marlan
+ * @author marlan/eriani
  */
 public class LogCsvFactory extends LogFactory {
 

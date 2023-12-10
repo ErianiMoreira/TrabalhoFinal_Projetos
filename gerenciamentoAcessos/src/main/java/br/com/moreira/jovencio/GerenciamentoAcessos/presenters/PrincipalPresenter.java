@@ -19,7 +19,7 @@ import javax.swing.JInternalFrame;
 
 /**
  *
- * @author marlan
+ * @author marlan/eriani
  */
 public class PrincipalPresenter implements INotificacaoDAOObservador, IUsuarioDAOObervador {
 
@@ -134,7 +134,7 @@ public class PrincipalPresenter implements INotificacaoDAOObservador, IUsuarioDA
 		atualizarContadorNotificacaoes();
 		try {
 			if( !usuarioLogadoIsAutenticado() ) {
-				view.getBtnAlteracaoSenha().setEnabled( false );
+				view.getBtnAlteracaoSenha().setEnabled( true );
 				view.getBtnManterUsuarios().setEnabled( false );
 			} else {
 				view.getBtnAlteracaoSenha().setEnabled( true );

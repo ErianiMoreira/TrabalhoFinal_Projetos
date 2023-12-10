@@ -6,7 +6,7 @@ import javax.swing.JTextField;
 
 /**
  *
- * @author marlan
+ * @author marlan/eriani
  */
 public class FormularioUsuarioView extends javax.swing.JInternalFrame {
 

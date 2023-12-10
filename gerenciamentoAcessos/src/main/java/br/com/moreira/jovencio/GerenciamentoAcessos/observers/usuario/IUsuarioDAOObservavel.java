@@ -3,7 +3,7 @@ package br.com.moreira.jovencio.GerenciamentoAcessos.observers.usuario;
 
 /**
  *
- * @author marlan
+ * @author marlan/eriani
  */
 public interface IUsuarioDAOObservavel {
 

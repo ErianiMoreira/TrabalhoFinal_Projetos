@@ -7,7 +7,7 @@ import org.slf4j.Logger;
 
 /**
  *
- * @author marlan
+ * @author marlan/eriani
  */
 public abstract class AbstractLogService {
 

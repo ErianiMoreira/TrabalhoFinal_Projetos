@@ -9,7 +9,7 @@ import java.util.Set;
 
 /**
  *
- * @author marlan
+ * @author marlan/eriani
  */
 public class Usuario {
 

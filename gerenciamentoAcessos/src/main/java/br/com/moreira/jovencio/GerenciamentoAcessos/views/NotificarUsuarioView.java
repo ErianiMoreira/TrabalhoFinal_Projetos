@@ -7,7 +7,7 @@ import javax.swing.JTextPane;
 
 /**
  *
- * @author marlan
+ * @author marlan/eriani
  */
 public class NotificarUsuarioView extends javax.swing.JInternalFrame {
 

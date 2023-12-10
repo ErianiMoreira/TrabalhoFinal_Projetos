@@ -5,7 +5,7 @@ import java.sql.Connection;
 
 /**
  *
- * @author marlan
+ * @author marlan/eriani
  */
 public interface IConexaoBancoDados {
 

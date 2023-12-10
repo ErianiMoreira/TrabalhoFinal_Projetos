@@ -7,7 +7,7 @@ import com.pss.senha.validacao.ValidadorSenha;
 
 /**
  *
- * @author marlan
+ * @author marlan/eriani
  */
 public class ValidadorSenhaClaytonAdapter implements IValidadorSenha {
 

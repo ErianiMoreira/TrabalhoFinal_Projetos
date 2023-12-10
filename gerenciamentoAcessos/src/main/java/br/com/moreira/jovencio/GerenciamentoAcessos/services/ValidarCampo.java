@@ -5,7 +5,7 @@ import br.com.moreira.jovencio.GerenciamentoAcessos.services.adapters.ValidadorS
 
 /**
  *
- * @author marlan
+ * @author marlan/eriani
  */
 public class ValidarCampo {
 

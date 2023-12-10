@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  *
- * @author marlan
+ * @author marlan/eriani
  */
 public class NotificacaoDAO extends SQLiteBancoDadosConexao implements INotificacaoDAO, INotificacaoDAOObservavel {
 

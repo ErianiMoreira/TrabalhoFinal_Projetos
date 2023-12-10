@@ -11,7 +11,7 @@ import javax.swing.WindowConstants;
 
 /**
  *
- * @author marlan
+ * @author marlan/eriani
  */
 public class AlterarSenhaPresenter {
 

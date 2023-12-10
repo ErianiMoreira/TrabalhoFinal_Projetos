@@ -6,7 +6,7 @@ import javax.swing.JPasswordField;
 
 /**
  *
- * @author marlan
+ * @author marlan/eriani
  */
 public class AlterarSenhaView extends javax.swing.JInternalFrame {
 

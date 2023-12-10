@@ -3,7 +3,7 @@ package br.com.moreira.jovencio.GerenciamentoAcessos.models.dtos;
 
 /**
  *
- * @author marlan
+ * @author marlan/eriani
  */
 public class UsuarioLoginCadastroDTO {
 

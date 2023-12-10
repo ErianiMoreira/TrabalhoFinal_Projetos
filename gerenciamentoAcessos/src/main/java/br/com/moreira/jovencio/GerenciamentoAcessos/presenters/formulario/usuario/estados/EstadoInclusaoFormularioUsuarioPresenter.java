@@ -11,7 +11,7 @@ import br.com.moreira.jovencio.GerenciamentoAcessos.services.impl.ValidarDadosUs
 
 /**
  *
- * @author marlan
+ * @author marlan/eriani
  */
 public class EstadoInclusaoFormularioUsuarioPresenter extends EstadoFormularioUsuarioPresenter {
 

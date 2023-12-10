@@ -9,7 +9,7 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author marlan
+ * @author marlan/eriani
  */
 public class NotificarPoPopupService implements INotificarPoPopupService {
 

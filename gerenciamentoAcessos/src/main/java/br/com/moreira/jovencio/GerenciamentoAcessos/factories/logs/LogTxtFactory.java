@@ -6,7 +6,7 @@ import br.com.moreira.jovencio.GerenciamentoAcessos.services.log.impl.TxtLogServ
 
 /**
  *
- * @author marlan
+ * @author marlan/eriani
  */
 public class LogTxtFactory extends LogFactory {
 

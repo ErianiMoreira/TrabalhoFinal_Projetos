@@ -6,7 +6,7 @@ import javax.swing.JTable;
 
 /**
  *
- * @author marlan
+ * @author marlan/eriani
  */
 public class NotificacoesUsuarioView extends javax.swing.JInternalFrame {
 

@@ -8,7 +8,7 @@ import javax.swing.border.EmptyBorder;
 
 /**
  *
- * @author marlan
+ * @author marlan/eriani
  */
 public class ActionButton extends JButton {
 
