@@ -20,14 +20,17 @@ public class EstadoVisualizacaoFormularioUsuarioPresenter extends EstadoFormular
 
 	public EstadoVisualizacaoFormularioUsuarioPresenter( FormularioUsuarioPresenter presenter ) throws Exception {
 		super( presenter );
-		cadastrarUsuarioService = new CadastrarUsuarioService();
+		cadastrarUsuarioService = new CadastrarUsuarioService(presenter.getUsuarioLogadoId());
 		usuarioRepository = new UsuarioRepository();
 		configurarDados();
 		presenter.desabilitarCampos( "todos" );
 		if( presenter.getUsuarioId() == presenter.getUsuarioLogadoId() ) {
 			presenter.desabilitarBotoes( "todos" );
 			presenter.habilitarBotoes( "resetar senha", "editar" );
-		}
+		} else {
+                    presenter.habilitarBotoes( "todos" );
+                    presenter.desabilitarBotoes( "salvar" );
+                }
 	}
 
 	@Override

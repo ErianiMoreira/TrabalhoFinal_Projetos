@@ -19,9 +19,10 @@ public class EstadoInclusaoFormularioUsuarioPresenter extends EstadoFormularioUs
 
 	public EstadoInclusaoFormularioUsuarioPresenter( FormularioUsuarioPresenter presenter ) throws Exception {
 		super( presenter );
-		cadastrarUsuarioService = new CadastrarUsuarioService();
+		cadastrarUsuarioService = new CadastrarUsuarioService(presenter.getUsuarioLogadoId());
 		presenter.removerUsuario();
 		presenter.habilitarCampos( "todos" );
+                presenter.desabilitarBotoes( "todos" );
 		presenter.habilitarBotoes( "salvar" );
 	}
 

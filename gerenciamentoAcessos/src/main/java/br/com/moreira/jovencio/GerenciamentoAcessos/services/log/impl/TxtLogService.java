@@ -73,5 +73,33 @@ public class TxtLogService implements ILogService {
 			e.printStackTrace();
 		}
 	}
+        
+        @Override
+        public void registrarAcao(String acao, String operacao, int usuarioId) {
+            try {
+                    registrarAcao( acao, operacao, DAOFactory.getDAOFactory().getUsuarioDAO().get( usuarioId ) );
+                } catch ( Exception ex ) {
+                    ex.printStackTrace();
+                }
+        }
+        
+        private final String TEMPLATE_ACAO = "Ocorreu a ação \"%s\" ao realizar a operação \"%s\", (\"%s\", e \"%s\").";
+
+        @Override
+        public void registrarAcao(String acao, String operacao, Usuario usuario){
+            var agora = LocalDateTime.now();
+		var usuarioString = new StringBuilder();
+		if( usuario != null ) {
+			usuarioString.append( "Usuário{id=" ).append( usuario.getId() ).append( ", nome completo=" ).append( usuario.getNomeCompleto() ).append( "} " );
+		} else {
+			usuarioString.append( "Usuário não logado ou não identificado " );
+		}
+
+		try {
+			escrever( agora, String.format( TEMPLATE_ACAO, acao, operacao, agora.format( DateTimeFormatter.ofPattern( "dd/MM/yyyy', 'H:mm:ss" ) ), usuarioString ) );
+		} catch ( IOException e ) {
+			e.printStackTrace();
+		}
+        }
 
 }

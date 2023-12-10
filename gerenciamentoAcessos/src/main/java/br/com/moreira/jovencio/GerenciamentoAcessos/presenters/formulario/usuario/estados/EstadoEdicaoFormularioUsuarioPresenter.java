@@ -23,13 +23,19 @@ public class EstadoEdicaoFormularioUsuarioPresenter extends EstadoFormularioUsua
 
 	public EstadoEdicaoFormularioUsuarioPresenter( FormularioUsuarioPresenter presenter ) throws Exception {
 		super( presenter );
-		cadastrarUsuarioService = new CadastrarUsuarioService();
+		cadastrarUsuarioService = new CadastrarUsuarioService(presenter.getUsuarioLogadoId());
 		usuarioRepository = new UsuarioRepository();
 		configurarDados();
+                presenter.desabilitarCampos( "login" );
 		presenter.habilitarCampos( "nome", "sobrenome", "email" );
+                
 		if( presenter.getUsuarioId() == presenter.getUsuarioLogadoId() ) {
+                        presenter.desabilitarBotoes( "todos" );
 			presenter.habilitarBotoes( "resetar senha", "salvar" );
-		}
+		}else{
+                    presenter.habilitarBotoes( "todos" );
+                    presenter.desabilitarBotoes( "editar" );
+                }
 
 	}
 

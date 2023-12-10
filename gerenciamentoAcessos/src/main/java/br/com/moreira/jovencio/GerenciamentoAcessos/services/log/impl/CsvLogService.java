@@ -69,7 +69,7 @@ public class CsvLogService implements ILogService {
 			FileWriter outputfile = new FileWriter( file, !isNew );
 			CSVWriter writer = new CSVWriter( outputfile, ';', '"', '"', "\n" );
 			if( isNew ) {
-				String[] header = { "Falha", "Operação", "Usuário", "Data" };
+				String[] header = { "Falha/Ação", "Operação", "Usuário", "Data" };
 				writer.writeNext( header );
 			}
 
@@ -80,5 +80,30 @@ public class CsvLogService implements ILogService {
 			e.printStackTrace();
 		}
 	}
+
+        @Override
+        public void registrarAcao(String acao, String operacao, int usuarioId) {
+            try {
+                    registrarAcao( acao, operacao, DAOFactory.getDAOFactory().getUsuarioDAO().get( usuarioId ) );
+		} catch ( Exception ex ) {
+                    ex.printStackTrace();
+		}
+        }
+        
+        public void registrarAcao(String acao, String operacao, Usuario usuario){
+            var agora = LocalDateTime.now();
+		var usuarioString = new StringBuilder();
+		if( usuario != null ) {
+			usuarioString.append( "Usuário{id=" ).append( usuario.getId() ).append( ", nome completo=" ).append( usuario.getNomeCompleto() ).append( "} " );
+		} else {
+			usuarioString.append( "Usuário não logado ou não identificado " );
+		}
+
+		try {
+			escrever( agora, acao, operacao, usuarioString.toString() );
+		} catch ( IOException e ) {
+			e.printStackTrace();
+		}
+        }
 
 }

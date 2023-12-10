@@ -44,13 +44,13 @@ public class JsonLogService implements ILogService {
 		}
 
 		try {
-			escrever( agora, falha, operacao, usuarioString.toString() );
+			escrever( agora, falha, "", operacao, usuarioString.toString() );
 		} catch ( IOException e ) {
 			e.printStackTrace();
 		}
 	}
 
-	private void escrever( LocalDateTime hora, String falha, String operacao, String usuario ) throws IOException {
+	private void escrever( LocalDateTime hora, String falha, String acao, String operacao, String usuario ) throws IOException {
 		Path currentRelativePath = Paths.get( "" );
 		String s = currentRelativePath.toAbsolutePath().toString();
 		Dotenv dotenv = Dotenv.configure().load();
@@ -63,6 +63,7 @@ public class JsonLogService implements ILogService {
 		var ele = new StringBuilder();
 		ele.append( "{" );
 		ele.append( "\"falha\":\"" ).append( falha ).append( "\"," );
+                ele.append( "\"acao\":\"" ).append( acao ).append( "\"," );
 		ele.append( "\"operacao\":\"" ).append( operacao ).append( "\"," );
 		ele.append( "\"usuario\":" ).append( usuario ).append( "," );
 		ele.append( "\"hora\":\"" ).append( hora.format( DateTimeFormatter.ofPattern( "dd/MM/yyyy H:mm:ss" ) ) ).append( "\"" );
@@ -125,5 +126,31 @@ public class JsonLogService implements ILogService {
 			e.printStackTrace();
 		}
 	}
+        
+        @Override
+        public void registrarAcao(String acao, String operacao, int usuarioId) {
+            try {
+                    registrarAcao( acao, operacao, DAOFactory.getDAOFactory().getUsuarioDAO().get( usuarioId ) );
+                } catch ( Exception ex ) {
+                    ex.printStackTrace();
+                }
+        }
+
+        @Override
+        public void registrarAcao(String acao, String operacao, Usuario usuario){
+            var agora = LocalDateTime.now();
+		var usuarioString = new StringBuilder();
+		if( usuario != null ) {
+			usuarioString.append( "{\"usuario\":{ \"id\":" ).append( usuario.getId() ).append( ", \"nomeCompleto\":\"" ).append( usuario.getNomeCompleto() ).append( "\"}} " );
+		} else {
+			usuarioString.append( "{\"usuario\":{\"id\":0, \"nomeCompleto\":\"usuário não logado ou não identificado\"}}" );
+		}
+
+		try {
+			escrever( agora, "", acao, operacao, usuarioString.toString() );
+		} catch ( IOException e ) {
+			e.printStackTrace();
+		}
+        }
 
 }

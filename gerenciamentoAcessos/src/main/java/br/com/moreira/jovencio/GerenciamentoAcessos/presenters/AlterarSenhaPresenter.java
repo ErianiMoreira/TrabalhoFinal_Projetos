@@ -22,7 +22,7 @@ public class AlterarSenhaPresenter {
 
 	public AlterarSenhaPresenter( int usuarioLogadoId ) throws Exception {
 		this.usuarioLogadoId = usuarioLogadoId;
-		cadastrarUsuarioService = new CadastrarUsuarioService();
+		cadastrarUsuarioService = new CadastrarUsuarioService(usuarioLogadoId);
 		view = new AlterarSenhaView();
 		notificarPopUp = new NotificarPoPopupService( view );
 		view.setVisible( false );

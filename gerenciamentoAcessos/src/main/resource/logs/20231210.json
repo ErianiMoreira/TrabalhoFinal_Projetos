@@ -1,0 +1,4 @@
+[
+{"falha":"","acao":" Cadastro do usuário ","operacao":" Cadastrar ","usuario":{"usuario":{"id":0, "nomeCompleto":"usuário não logado ou não identificado"}},"hora":"10/12/2023 10:57:04"}
+,{"falha":"","acao":" Atualização do usuário ","operacao":" Atualizar ","usuario":{"usuario":{ "id":1, "nomeCompleto":"dataCadastro dataCadastro1"}} ,"hora":"10/12/2023 10:57:16"}
+]

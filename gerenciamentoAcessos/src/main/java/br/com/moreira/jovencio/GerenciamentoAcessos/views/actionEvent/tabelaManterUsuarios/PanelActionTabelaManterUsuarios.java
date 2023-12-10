@@ -31,15 +31,23 @@ public class PanelActionTabelaManterUsuarios extends javax.swing.JPanel {
         setMinimumSize(new java.awt.Dimension(366, 40));
 
         btnVisualizar.setText("Visualizar");
+        btnVisualizar.setMaximumSize(new java.awt.Dimension(75, 23));
+        btnVisualizar.setMinimumSize(new java.awt.Dimension(75, 23));
         btnVisualizar.setPreferredSize(new java.awt.Dimension(120, 28));
 
         btnEditar.setText("Editar");
+        btnEditar.setMaximumSize(new java.awt.Dimension(75, 23));
+        btnEditar.setMinimumSize(new java.awt.Dimension(75, 23));
         btnEditar.setPreferredSize(new java.awt.Dimension(90, 28));
 
         btnNotificar.setText("Notificar");
+        btnNotificar.setMaximumSize(new java.awt.Dimension(75, 23));
+        btnNotificar.setMinimumSize(new java.awt.Dimension(75, 23));
         btnNotificar.setPreferredSize(new java.awt.Dimension(120, 28));
 
         btnAutorizar.setText("Autorizar");
+        btnAutorizar.setMaximumSize(new java.awt.Dimension(75, 23));
+        btnAutorizar.setMinimumSize(new java.awt.Dimension(75, 23));
         btnAutorizar.setPreferredSize(new java.awt.Dimension(120, 28));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -47,15 +55,15 @@ public class PanelActionTabelaManterUsuarios extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(0, 0, 0)
                 .addComponent(btnVisualizar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(0, 0, 0)
                 .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(6, 6, 6)
+                .addGap(0, 0, 0)
                 .addComponent(btnNotificar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(6, 6, 6)
+                .addGap(0, 0, 0)
                 .addComponent(btnAutorizar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(6, 6, 6))
+                .addGap(0, 0, 0))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

@@ -3,6 +3,7 @@ package br.com.moreira.jovencio.GerenciamentoAcessos.services.impl;
 
 import br.com.moreira.jovencio.GerenciamentoAcessos.daos.IUsuarioDAO;
 import br.com.moreira.jovencio.GerenciamentoAcessos.factories.daos.DAOFactory;
+import br.com.moreira.jovencio.GerenciamentoAcessos.factories.logs.LogFactory;
 import br.com.moreira.jovencio.GerenciamentoAcessos.models.dtos.ControllerRetorno;
 import br.com.moreira.jovencio.GerenciamentoAcessos.models.entities.Usuario;
 import br.com.moreira.jovencio.GerenciamentoAcessos.services.AbstractLogService;
@@ -23,18 +24,21 @@ public class CadastrarUsuarioService extends AbstractLogService implements ICada
 	private final IUsuarioDAO usuarioDao;
 	private final INotificarUsuarioService notificarUsuarioService;
 	private AbstractValidarDadosUsuario validador;
+        private int usuarioLogadoId;
 
-	public CadastrarUsuarioService( AbstractValidarDadosUsuario validador ) throws Exception {
+	public CadastrarUsuarioService( int usuarioLogadoId, AbstractValidarDadosUsuario validador ) throws Exception {
 		super( LoggerFactory.getLogger( AbstractLogService.class ) );
 		usuarioDao = DAOFactory.getDAOFactory().getUsuarioDAO();
 		notificarUsuarioService = new NotificarUsuarioService();
 		this.validador = validador;
+                this.usuarioLogadoId = usuarioLogadoId;
 	}
 
-	public CadastrarUsuarioService() throws Exception {
+	public CadastrarUsuarioService( int usuarioLogadoId ) throws Exception {
 		super( LoggerFactory.getLogger( AbstractLogService.class ) );
 		usuarioDao = DAOFactory.getDAOFactory().getUsuarioDAO();
 		notificarUsuarioService = new NotificarUsuarioService();
+                this.usuarioLogadoId = usuarioLogadoId;
 	}
 
 	@Override
@@ -55,10 +59,16 @@ public class CadastrarUsuarioService extends AbstractLogService implements ICada
 			validar.setCodigo( 201 );
 			validar.setEntidadeId( usuario.getId() );
 			notificarUsuarioService.notificar( usuario.getId(), "Bem vindo ao sistema" );
+                        try {
+				LogFactory.getLOGFactory().getLogService().registrarAcao( " Cadastro do usuário ", " Cadastrar ", usuarioLogadoId );
+			} catch ( Exception ex1 ) {
+				ex1.printStackTrace();
+			}
 			return validar;
 		} catch ( Exception e ) {
 			return tratarErro( e );
 		}
+           
 	}
 
 	@Override
@@ -72,6 +82,11 @@ public class CadastrarUsuarioService extends AbstractLogService implements ICada
 			usuarioDao.update( usuario.getId(), usuario );
 			validar.setCodigo( 200 );
 			validar.setEntidadeId( usuario.getId() );
+                        try {
+				LogFactory.getLOGFactory().getLogService().registrarAcao( " Atualização do usuário ", " Atualizar ", usuarioLogadoId );
+			} catch ( Exception ex1 ) {
+				ex1.printStackTrace();
+			}
 			return validar;
 		} catch ( Exception e ) {
 			return tratarErro( e );
@@ -101,6 +116,11 @@ public class CadastrarUsuarioService extends AbstractLogService implements ICada
 				return validar;
 			}
 			usuarioDao.alterarSenha( usuarioId, senha );
+                        try {
+				LogFactory.getLOGFactory().getLogService().registrarAcao( " Atualizado a senha do usuário: "+ usuarioId, " Alteração de senha ", usuarioLogadoId );
+			} catch ( Exception ex1 ) {
+				ex1.printStackTrace();
+			}
 			return validar;
 		} catch ( Exception ex ) {
 			return tratarErro( ex );
@@ -150,6 +170,11 @@ public class CadastrarUsuarioService extends AbstractLogService implements ICada
 				return retorno;
 			}
 			usuarioDao.autorizar( usuarioId );
+                        try {
+				LogFactory.getLOGFactory().getLogService().registrarAcao( " Autorizar usuário " + usuarioId, " Autorização ", usuarioLogadoId );
+			} catch ( Exception ex1 ) {
+				ex1.printStackTrace();
+			}
 			return retorno;
 		} catch ( Exception ex ) {
 			return tratarErro( ex );
@@ -170,6 +195,11 @@ public class CadastrarUsuarioService extends AbstractLogService implements ICada
 	public ControllerRetorno resetarSenha( int usuarioId ) {
 		try {
 			usuarioDao.resetarSenha( usuarioId );
+                        try {
+				LogFactory.getLOGFactory().getLogService().registrarAcao( " Resetar a senha do usuário: " + usuarioId, " Reset de senha ", usuarioLogadoId );
+			} catch ( Exception ex1 ) {
+				ex1.printStackTrace();
+			}
 			return new ControllerRetorno( 200 );
 		} catch ( Exception ex ) {
 			return tratarErro( ex );
@@ -181,6 +211,11 @@ public class CadastrarUsuarioService extends AbstractLogService implements ICada
 		try {
 			notificarUsuarioService.deletarNotificacoesByUsuario( usuarioId );
 			usuarioDao.delete( usuarioId );
+                        try {
+				LogFactory.getLOGFactory().getLogService().registrarAcao( " Excuir usuário: " + usuarioId, " Exclusão ", usuarioLogadoId );
+			} catch ( Exception ex1 ) {
+				ex1.printStackTrace();
+			}
 			return new ControllerRetorno( 200 );
 		} catch ( Exception ex ) {
 			return tratarErro( ex );

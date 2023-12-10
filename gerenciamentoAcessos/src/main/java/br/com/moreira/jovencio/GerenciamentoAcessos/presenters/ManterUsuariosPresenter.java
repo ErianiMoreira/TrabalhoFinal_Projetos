@@ -51,7 +51,7 @@ public class ManterUsuariosPresenter implements IUsuarioDAOObervador, INotificac
 		view = new ManterUsuariosView();
 		notificarPopUp = new NotificarPoPopupService( view );
 		usuarioRepository = new UsuarioRepository();
-		cadastrarUsuarioService = new CadastrarUsuarioService();
+		cadastrarUsuarioService = new CadastrarUsuarioService(usuarioLogadoId);
 		DAOFactory.getDAOFactory().getNotificacaoDAO().adicionarObservador( this );
 		DAOFactory.getDAOFactory().getUsuarioDAO().adicionarObservador( this );
 		configurarView();

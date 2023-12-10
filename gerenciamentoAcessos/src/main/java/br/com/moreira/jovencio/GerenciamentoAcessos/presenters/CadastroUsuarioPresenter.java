@@ -49,7 +49,7 @@ public class CadastroUsuarioPresenter {
 		dto.setSenhaConfirmacao( String.valueOf( view.getPswConfirmarSenha().getPassword() ) );
 		ControllerRetorno retorno;
 		try {
-			retorno = new CadastrarUsuarioService( new ValidarDadosUsuarioCadastroLogin() ).cadastrar( dto );
+			retorno = new CadastrarUsuarioService( 0 ,new ValidarDadosUsuarioCadastroLogin() ).cadastrar( dto );
 		} catch ( Exception ex ) {
 			try {
 				LogFactory.getLOGFactory().getLogService().registrarFalha( ex.getMessage(), "cadastrar da CadastroUsuarioPresenter", 0 );

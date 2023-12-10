@@ -48,7 +48,7 @@ public class FormularioUsuarioPresenter {
 	public FormularioUsuarioPresenter( int usuarioLogadoId, Integer usuarioId, String estado ) throws Exception {
 		view = new FormularioUsuarioView();
 		usuarioRepository = new UsuarioRepository();
-		cadastrarUsuarioService = new CadastrarUsuarioService();
+		cadastrarUsuarioService = new CadastrarUsuarioService(usuarioLogadoId);
 		popup = new NotificarPoPopupService( view );
 		this.usuarioLogadoId = usuarioLogadoId;
 		this.usuarioId = usuarioId;

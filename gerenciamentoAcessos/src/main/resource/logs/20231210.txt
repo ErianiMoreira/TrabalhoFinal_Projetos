@@ -1,0 +1,1 @@
+Ocorreu a ação " Atualização do usuário " ao realizar a operação " Atualizar ", ("10/12/2023, 10:54:08", e "Usuário{id=1, nome completo=dataCadastro dataCadastro} ").
