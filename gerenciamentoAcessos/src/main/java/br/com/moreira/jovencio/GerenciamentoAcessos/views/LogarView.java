@@ -39,7 +39,6 @@ public class LogarView extends javax.swing.JFrame {
 
         lblLogin.setText("Login");
 
-        txtLogin.setText("Informe o login");
         txtLogin.setAlignmentX(12.0F);
         txtLogin.setAlignmentY(12.0F);
         txtLogin.setPreferredSize(new java.awt.Dimension(360, 40));
@@ -49,7 +48,6 @@ public class LogarView extends javax.swing.JFrame {
         btnEntrar.setText("Entrar");
         btnEntrar.setPreferredSize(new java.awt.Dimension(120, 40));
 
-        pswSenha.setText("jPasswordField1");
         pswSenha.setPreferredSize(new java.awt.Dimension(360, 40));
 
         btnCadastrar.setText("Cadastrar");
@@ -60,7 +58,7 @@ public class LogarView extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(6, 6, 6)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(pswSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)

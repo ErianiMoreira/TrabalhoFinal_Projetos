@@ -15,8 +15,6 @@ public class UsuarioCadastroDTO {
 
 	private String email;
 
-	private String senha;
-
 	public String getNome() {
 		return nome;
 	}
@@ -47,14 +45,6 @@ public class UsuarioCadastroDTO {
 
 	public void setEmail( String email ) {
 		this.email = email;
-	}
-
-	public String getSenha() {
-		return senha;
-	}
-
-	public void setSenha( String senha ) {
-		this.senha = senha;
 	}
 
 }

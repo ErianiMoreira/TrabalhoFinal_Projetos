@@ -17,6 +17,10 @@ public class ControllerRetorno {
 		codigo = 500;
 	}
 
+	public ControllerRetorno( int codigo ) {
+		this.codigo = codigo;
+	}
+
 	public int getCodigo() {
 		return codigo;
 	}
@@ -42,15 +46,15 @@ public class ControllerRetorno {
 	}
 
 	public boolean isError() {
-		return 500 >= codigo && codigo <= 600;
+		return codigo >= 500 && codigo <= 600;
 	}
 
 	public boolean isWarning() {
-		return 400 >= codigo && codigo <= 500;
+		return codigo >= 400 && codigo <= 500;
 	}
 
 	public boolean isSuccess() {
-		return 200 >= codigo && codigo <= 300;
+		return codigo >= 200 && codigo <= 300;
 	}
 
 }

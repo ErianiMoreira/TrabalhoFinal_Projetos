@@ -27,7 +27,7 @@ public class AlterarSenhaView extends javax.swing.JInternalFrame {
         lblNovaSenha = new javax.swing.JLabel();
         pswNovaSenha = new javax.swing.JPasswordField();
         lblConfirmarNovaSenha = new javax.swing.JLabel();
-        pwdConfirmarNovaSenha = new javax.swing.JPasswordField();
+        pswConfirmarNovaSenha = new javax.swing.JPasswordField();
         btnAlterarSenha = new javax.swing.JButton();
 
         setClosable(true);
@@ -40,8 +40,8 @@ public class AlterarSenhaView extends javax.swing.JInternalFrame {
 
         lblConfirmarNovaSenha.setText("Confirmar Nova Senha");
 
-        pwdConfirmarNovaSenha.setText("jPasswordField1");
-        pwdConfirmarNovaSenha.setPreferredSize(new java.awt.Dimension(360, 40));
+        pswConfirmarNovaSenha.setText("jPasswordField1");
+        pswConfirmarNovaSenha.setPreferredSize(new java.awt.Dimension(360, 40));
 
         btnAlterarSenha.setText("Alterar");
         btnAlterarSenha.setPreferredSize(new java.awt.Dimension(120, 40));
@@ -65,7 +65,7 @@ public class AlterarSenhaView extends javax.swing.JInternalFrame {
                                 .addComponent(lblConfirmarNovaSenha))
                             .addGroup(layout.createSequentialGroup()
                                 .addContainerGap()
-                                .addComponent(pwdConfirmarNovaSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(pswConfirmarNovaSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
@@ -82,7 +82,7 @@ public class AlterarSenhaView extends javax.swing.JInternalFrame {
                 .addGap(18, 18, 18)
                 .addComponent(lblConfirmarNovaSenha)
                 .addGap(6, 6, 6)
-                .addComponent(pwdConfirmarNovaSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(pswConfirmarNovaSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnAlterarSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -95,8 +95,8 @@ public class AlterarSenhaView extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnAlterarSenha;
     private javax.swing.JLabel lblConfirmarNovaSenha;
     private javax.swing.JLabel lblNovaSenha;
+    private javax.swing.JPasswordField pswConfirmarNovaSenha;
     private javax.swing.JPasswordField pswNovaSenha;
-    private javax.swing.JPasswordField pwdConfirmarNovaSenha;
     // End of variables declaration//GEN-END:variables
 
 	public JButton getBtnAlterarSenha() {
@@ -107,8 +107,8 @@ public class AlterarSenhaView extends javax.swing.JInternalFrame {
 		return pswNovaSenha;
 	}
 
-	public JPasswordField getPwdConfirmarNovaSenha() {
-		return pwdConfirmarNovaSenha;
+	public JPasswordField getPswConfirmarNovaSenha() {
+		return pswConfirmarNovaSenha;
 	}
 
 }
