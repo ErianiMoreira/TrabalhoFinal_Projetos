@@ -1,6 +1,7 @@
 
 package br.com.moreira.jovencio.GerenciamentoAcessos.services.impl;
 
+import br.com.moreira.jovencio.GerenciamentoAcessos.models.dtos.ControllerRetorno;
 import br.com.moreira.jovencio.GerenciamentoAcessos.services.INotificarPoPopupService;
 import br.com.moreira.jovencio.GerenciamentoAcessos.services.ValidarCampo;
 import java.awt.Component;
@@ -60,6 +61,17 @@ public class NotificarPoPopupService implements INotificarPoPopupService {
 		}
 
 		return JOptionPane.PLAIN_MESSAGE;
+	}
+
+	@Override
+	public void showPopupOk( ControllerRetorno retorno ) {
+		if( retorno.isSuccess() ) {
+			showPopupOk( "Sucesso", retorno.getMensagem() != null ? retorno.getMensagem() : "Função realizada com sucesso", "informativa" );
+		} else if( retorno.isWarning() ) {
+			showPopupOk( "Alerta", retorno.getMensagem() != null ? retorno.getMensagem() : "Função não realizada ou realizada parcialmente", "alerta" );
+		} else {
+			showPopupOk( "Erro", retorno.getMensagem() != null ? retorno.getMensagem() : "Função não realizada", "erro" );
+		}
 	}
 
 }

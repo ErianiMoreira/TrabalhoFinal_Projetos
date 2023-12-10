@@ -4,7 +4,6 @@ package br.com.moreira.jovencio.GerenciamentoAcessos.services;
 import br.com.moreira.jovencio.GerenciamentoAcessos.models.dtos.ControllerRetorno;
 import java.util.UUID;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -12,7 +11,11 @@ import org.slf4j.LoggerFactory;
  */
 public abstract class AbstractLogService {
 
-	protected final Logger log = LoggerFactory.getLogger( AbstractLogService.class );
+	protected Logger log;
+
+	public AbstractLogService( Logger log ) {
+		this.log = log;
+	}
 
 	protected ControllerRetorno tratarErro( Exception e ) {
 		var mensagem = "Erro inesperado, favor contatar o administrador do sistema com o código '" + UUID.randomUUID().toString() + "'";

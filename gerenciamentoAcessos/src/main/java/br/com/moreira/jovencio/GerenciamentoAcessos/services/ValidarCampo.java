@@ -1,6 +1,8 @@
 
 package br.com.moreira.jovencio.GerenciamentoAcessos.services;
 
+import br.com.moreira.jovencio.GerenciamentoAcessos.services.adapters.ValidadorSenhaClaytonAdapter;
+
 /**
  *
  * @author marlan
@@ -32,7 +34,8 @@ public class ValidarCampo {
 	}
 
 	public static String asSenha( String label, String campo, int tamanhoLimite ) {
-		return null;
+		IValidadorSenha validadorSenha = new ValidadorSenhaClaytonAdapter();
+		return validadorSenha.validar( campo, tamanhoLimite );
 	}
 
 }

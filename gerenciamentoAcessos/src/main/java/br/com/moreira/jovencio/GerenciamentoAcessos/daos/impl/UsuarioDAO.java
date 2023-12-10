@@ -5,6 +5,8 @@ import br.com.moreira.jovencio.GerenciamentoAcessos.daos.IUsuarioDAO;
 import br.com.moreira.jovencio.GerenciamentoAcessos.daos.conexoes.SQLiteBancoDadosConexao;
 import br.com.moreira.jovencio.GerenciamentoAcessos.models.dtos.UsuarioGridDTO;
 import br.com.moreira.jovencio.GerenciamentoAcessos.models.entities.Usuario;
+import br.com.moreira.jovencio.GerenciamentoAcessos.observers.usuario.IUsuarioDAOObervador;
+import br.com.moreira.jovencio.GerenciamentoAcessos.observers.usuario.IUsuarioDAOObservavel;
 import br.com.moreira.jovencio.GerenciamentoAcessos.services.ValidarCampo;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -19,9 +21,50 @@ import org.slf4j.LoggerFactory;
  *
  * @author marlan
  */
-public class UsuarioDAO extends SQLiteBancoDadosConexao implements IUsuarioDAO {
+public class UsuarioDAO extends SQLiteBancoDadosConexao implements IUsuarioDAO, IUsuarioDAOObservavel {
 
 	protected final Logger log = LoggerFactory.getLogger( UsuarioDAO.class );
+	private List<IUsuarioDAOObervador> observadores;
+	private static UsuarioDAO instancia = null;
+
+	private UsuarioDAO() {
+	}
+
+	public static UsuarioDAO getInstancia() {
+		if( instancia == null ) {
+			instancia = new UsuarioDAO();
+		}
+		return instancia;
+	}
+
+	@Override
+	public void adicionarObservador( IUsuarioDAOObervador observador ) {
+		if( observadores == null ) {
+			observadores = new ArrayList<>();
+		}
+		observadores.add( observador );
+	}
+
+	@Override
+	public void removerObservador( IUsuarioDAOObervador observador ) {
+		if( observadores == null ) {
+			return;
+		}
+
+		if( observadores.contains( observador ) ) {
+			observadores.remove( observador );
+		}
+	}
+
+	@Override
+	public void notificarObservadores() {
+		if( observadores == null || observadores.isEmpty() ) {
+			return;
+		}
+
+		observadores.forEach( observador -> observador.atualizar( this ) );
+
+	}
 
 	@Override
 	public void createTable() throws Exception {
@@ -69,21 +112,24 @@ public class UsuarioDAO extends SQLiteBancoDadosConexao implements IUsuarioDAO {
 	}
 
 	@Override
-	public boolean existeUsuarioComLogin( String login ) throws SQLException {
+	public Usuario findUsuarioComLogin( String login ) throws SQLException {
 		var sql = new StringBuilder();
 
-		sql.append( " select u.id as id " );
+		sql.append( " select " );
+		sql.append( appendTodasColunas() );
 		sql.append( " from usuarios u " );
 		sql.append( " where u.login = '" ).append( login ).append( "' " );
 
 		var statement = openConnection().createStatement();
-		statement.setMaxRows( 1 );
 		log.info( sql.toString() );
 		var result = statement.executeQuery( sql.toString() );
 		result.next();
-		var idExistente = result.getInt( "id" );
+		var usuario = recuperaTodasColunas( result );
 		closeConnection( statement.getConnection() );
-		return Integer.compare( idExistente, 0 ) != 0;
+		if( Integer.compare( usuario.getId(), 0 ) == 0 ) {
+			return null;
+		}
+		return usuario;
 	}
 
 	@Override
@@ -105,11 +151,15 @@ public class UsuarioDAO extends SQLiteBancoDadosConexao implements IUsuarioDAO {
 		sql.append( "     '" ).append( entity.getSobrenome() ).append( "', " );
 		sql.append( "     '" ).append( entity.getLogin() ).append( "', " );
 		if( ValidarCampo.isNotNullVazioOrEspacos( entity.getEmail() ) ) {
-			sql.append( "     '" ).append( entity.getLogin() ).append( "', " );
+			sql.append( "     '" ).append( entity.getEmail() ).append( "', " );
 		} else {
 			sql.append( "     null, " );
 		}
-		sql.append( "     '" ).append( entity.getSenha() ).append( "', " );
+		if( entity.getSenha() != null && !entity.getSenha().isEmpty() && !entity.getSenha().isBlank() ) {
+			sql.append( "     '" ).append( entity.getSenha() ).append( "', " );
+		} else {
+			sql.append( "     null, " );
+		}
 		if( entity.getPermissoes() != null && !entity.getPermissoes().isEmpty() ) {
 			sql.append( "     '" ).append( String.join( ";", entity.getPermissoes() ) ).append( "', " );
 		} else {
@@ -125,6 +175,7 @@ public class UsuarioDAO extends SQLiteBancoDadosConexao implements IUsuarioDAO {
 
 		var id = super.insert( sql.toString() );
 		entity.setId( id );
+		notificarObservadores();
 		return entity;
 	}
 
@@ -164,6 +215,7 @@ public class UsuarioDAO extends SQLiteBancoDadosConexao implements IUsuarioDAO {
 		var statement = openConnection().createStatement();
 		statement.executeUpdate( sql.toString() );
 		closeConnection( statement.getConnection() );
+		notificarObservadores();
 	}
 
 	@Override
@@ -178,6 +230,7 @@ public class UsuarioDAO extends SQLiteBancoDadosConexao implements IUsuarioDAO {
 		var statement = openConnection().createStatement();
 		statement.executeUpdate( sql.toString() );
 		closeConnection( statement.getConnection() );
+		notificarObservadores();
 	}
 
 	@Override
@@ -232,6 +285,52 @@ public class UsuarioDAO extends SQLiteBancoDadosConexao implements IUsuarioDAO {
 		return countUsuarios;
 	}
 
+	@Override
+	public void autorizar( int id ) throws Exception {
+		var sql = new StringBuilder();
+
+		sql.append( " update usuarios set " );
+		sql.append( "     dataAutorizado = '" ).append( LocalDateTime.now().format( DATE_TIME_PATTERN ) ).append( "' " );
+		sql.append( " where id = " ).append( id );
+		sql.append( " ; " );
+
+		log.info( sql.toString() );
+		var statement = openConnection().createStatement();
+		statement.executeUpdate( sql.toString() );
+		closeConnection( statement.getConnection() );
+		notificarObservadores();
+	}
+
+	@Override
+	public void alterarSenha( int id, String senha ) throws Exception {
+		var sql = new StringBuilder();
+
+		sql.append( " update usuarios set " );
+		sql.append( "     senha = '" ).append( senha ).append( "' " );
+		sql.append( " where id = " ).append( id );
+		sql.append( " ; " );
+
+		log.info( sql.toString() );
+		var statement = openConnection().createStatement();
+		statement.executeUpdate( sql.toString() );
+		closeConnection( statement.getConnection() );
+	}
+
+	@Override
+	public void resetarSenha( int id ) throws Exception {
+		var sql = new StringBuilder();
+
+		sql.append( " update usuarios set " );
+		sql.append( "     senha = null " );
+		sql.append( " where id = " ).append( id );
+		sql.append( " ; " );
+
+		log.info( sql.toString() );
+		var statement = openConnection().createStatement();
+		statement.executeUpdate( sql.toString() );
+		closeConnection( statement.getConnection() );
+	}
+
 	private String appendTodasColunas() {
 		var sql = new StringBuilder();
 		sql.append( "     u.id, " );
@@ -260,7 +359,7 @@ public class UsuarioDAO extends SQLiteBancoDadosConexao implements IUsuarioDAO {
 		usuario.setSenha( result.getString( "senha" ) );
 		var permissoesString = result.getString( "permissoes" );
 		usuario.setPermissoes( permissoesString != null ? Set.of( permissoesString.split( ";" ) ) : null );
-		var dataAutorizadoString = result.getString( "dataCadastro" );
+		var dataAutorizadoString = result.getString( "dataAutorizado" );
 		usuario.setDataAutorizado( dataAutorizadoString == null ? null : LocalDateTime.parse( dataAutorizadoString, DATE_TIME_PATTERN ) );
 		return usuario;
 	}

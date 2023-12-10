@@ -16,11 +16,14 @@ import org.slf4j.LoggerFactory;
  */
 public class LoginService extends AbstractLogService implements ILoginService {
 
+	private final String SENHA_PADRAO = "Senha@135";
+
 	protected final Logger log = LoggerFactory.getLogger( LoginService.class );
 
 	private final IUsuarioDAO usuarioDao;
 
 	public LoginService() throws Exception {
+		super( LoggerFactory.getLogger( LoginService.class ) );
 		usuarioDao = DAOFactory.getDAOFactory().getUsuarioDAO();
 	}
 
@@ -36,12 +39,17 @@ public class LoginService extends AbstractLogService implements ILoginService {
 				retorno.setEntidadeId( usuario.getId() );
 				return retorno;
 			}
-			if( !usuarioDao.existeUsuarioComLogin( login ) ) {
+			usuario = usuarioDao.findUsuarioComLogin( login );
+			if( usuario != null && usuario.getSenha() != null && !usuario.getSenha().isEmpty() ) {
 				retorno.setCodigo( 400 );
 				retorno.setMensagem( "Login ou senha inválidos" );
 				return retorno;
+			} else if( usuario != null && ( usuario.getSenha() == null || usuario.getSenha().isEmpty() ) ) {
+				retorno.setCodigo( 426 );
+				retorno.setMensagem( "Senha resetada, sua nova senha é '" + SENHA_PADRAO + "' e recomendamos que seja alterada o quanto antes!" );
+				usuarioDao.alterarSenha( usuario.getId(), SENHA_PADRAO );
+				return retorno;
 			}
-			retorno.setCodigo( 500 );
 			retorno.setMensagem( "Nenhum usuário encontratdo!" );
 			return retorno;
 		} catch ( Exception ex ) {

@@ -1,6 +1,7 @@
 
 package br.com.moreira.jovencio.GerenciamentoAcessos.views;
 
+import javax.swing.JButton;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.JToggleButton;
@@ -184,6 +185,10 @@ public class CadastroUsuarioView extends javax.swing.JFrame {
 
 	public JTextField getTxtSobrenome() {
 		return txtSobrenome;
+	}
+
+	public JButton getBtnCancelar() {
+		return btnCancelar;
 	}
 
 }

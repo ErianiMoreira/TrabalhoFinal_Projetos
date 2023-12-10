@@ -34,6 +34,7 @@ public class ManterUsuariosView extends javax.swing.JInternalFrame {
         cboxPossuiNotificacaoNaoLida = new javax.swing.JComboBox<>();
         btnFiltrar = new javax.swing.JButton();
         btnLimpar = new javax.swing.JButton();
+        btnNovo = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
         setIconifiable(true);
@@ -98,6 +99,9 @@ public class ManterUsuariosView extends javax.swing.JInternalFrame {
         btnLimpar.setText("Limpar");
         btnLimpar.setPreferredSize(new java.awt.Dimension(120, 40));
 
+        btnNovo.setText("Novo");
+        btnNovo.setPreferredSize(new java.awt.Dimension(120, 40));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -105,7 +109,6 @@ public class ManterUsuariosView extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(6, 6, 6)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblNome)
@@ -113,15 +116,20 @@ public class ManterUsuariosView extends javax.swing.JInternalFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(18, 18, 18)
-                                .addComponent(lblPossuiNotificacaoNaoLida))
+                                .addComponent(lblPossuiNotificacaoNaoLida)
+                                .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(18, 18, 18)
-                                .addComponent(cboxPossuiNotificacaoNaoLida, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnLimpar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnFiltrar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
+                                .addComponent(cboxPossuiNotificacaoNaoLida, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnLimpar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnFiltrar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnNovo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 1176, Short.MAX_VALUE))
+                .addGap(6, 6, 6))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -139,7 +147,9 @@ public class ManterUsuariosView extends javax.swing.JInternalFrame {
                     .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(36, 36, 36)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(36, 36, 36))
+                .addGap(18, 18, 18)
+                .addComponent(btnNovo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(6, 6, 6))
         );
 
         pack();
@@ -148,6 +158,7 @@ public class ManterUsuariosView extends javax.swing.JInternalFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnFiltrar;
     private javax.swing.JButton btnLimpar;
+    private javax.swing.JButton btnNovo;
     private javax.swing.JComboBox<String> cboxPossuiNotificacaoNaoLida;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblNome;
@@ -162,6 +173,10 @@ public class ManterUsuariosView extends javax.swing.JInternalFrame {
 
 	public JButton getBtnLimpar() {
 		return btnLimpar;
+	}
+
+	public JButton getBtnNovo() {
+		return btnNovo;
 	}
 
 	public JComboBox<String> getCboxPossuiNotificacaoNaoLida() {

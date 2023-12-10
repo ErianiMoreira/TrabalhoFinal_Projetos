@@ -4,6 +4,8 @@ package br.com.moreira.jovencio.GerenciamentoAcessos.daos.impl;
 import br.com.moreira.jovencio.GerenciamentoAcessos.daos.INotificacaoDAO;
 import br.com.moreira.jovencio.GerenciamentoAcessos.daos.conexoes.SQLiteBancoDadosConexao;
 import br.com.moreira.jovencio.GerenciamentoAcessos.models.entities.Notificacao;
+import br.com.moreira.jovencio.GerenciamentoAcessos.observers.notificacao.INotificacaoDAOObservador;
+import br.com.moreira.jovencio.GerenciamentoAcessos.observers.notificacao.INotificacaoDAOObservavel;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
@@ -16,9 +18,49 @@ import org.slf4j.LoggerFactory;
  *
  * @author marlan
  */
-public class NotificacaoDAO extends SQLiteBancoDadosConexao implements INotificacaoDAO {
+public class NotificacaoDAO extends SQLiteBancoDadosConexao implements INotificacaoDAO, INotificacaoDAOObservavel {
 
 	protected final Logger log = LoggerFactory.getLogger( NotificacaoDAO.class );
+	private List<INotificacaoDAOObservador> observadores;
+	private static NotificacaoDAO instancia = null;
+
+	private NotificacaoDAO() {
+	}
+
+	public static NotificacaoDAO getInstancia() {
+		if( instancia == null ) {
+			instancia = new NotificacaoDAO();
+		}
+		return instancia;
+	}
+
+	@Override
+	public void adicionarObservador( INotificacaoDAOObservador observador ) {
+		if( observadores == null ) {
+			observadores = new ArrayList<>();
+		}
+		observadores.add( observador );
+	}
+
+	@Override
+	public void removerObservador( INotificacaoDAOObservador observador ) {
+		if( observadores == null ) {
+			return;
+		}
+
+		if( observadores.contains( observador ) ) {
+			observadores.remove( observador );
+		}
+	}
+
+	@Override
+	public void notificarObservadores() {
+		if( observadores == null || observadores.isEmpty() ) {
+			return;
+		}
+
+		observadores.forEach( observador -> observador.atualizar( this ) );
+	}
 
 	@Override
 	public void createTable() throws Exception {
@@ -64,6 +106,7 @@ public class NotificacaoDAO extends SQLiteBancoDadosConexao implements INotifica
 
 		var id = super.insert( sql.toString() );
 		entity.setId( id );
+		notificarObservadores();
 		return entity;
 	}
 
@@ -95,13 +138,27 @@ public class NotificacaoDAO extends SQLiteBancoDadosConexao implements INotifica
 		var sql = new StringBuilder();
 
 		sql.append( " update notificacoes set " );
-		sql.append( "     lida = " ).append( lida );
+		sql.append( "     lida = " ).append( lida ? "1" : "0" );
 		sql.append( " where id = " ).append( id ).append( "; " );
 
 		log.info( sql.toString() );
 		var statement = openConnection().createStatement();
 		statement.executeUpdate( sql.toString() );
 		closeConnection( statement.getConnection() );
+		notificarObservadores();
+	}
+
+	public void deletarNotificacoesByUsuario( int usuarioId ) throws Exception {
+		var sql = new StringBuilder();
+
+		sql.append( " delete from notificacoes set " );
+		sql.append( " where paraUsuarioId = " ).append( usuarioId ).append( "; " );
+
+		log.info( sql.toString() );
+		var statement = openConnection().createStatement();
+		statement.executeUpdate( sql.toString() );
+		closeConnection( statement.getConnection() );
+		notificarObservadores();
 	}
 
 	private String appendTodasColunas() {

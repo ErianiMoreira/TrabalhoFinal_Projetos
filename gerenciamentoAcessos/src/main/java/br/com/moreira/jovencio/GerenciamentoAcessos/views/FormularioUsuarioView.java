@@ -42,22 +42,18 @@ public class FormularioUsuarioView extends javax.swing.JInternalFrame {
 
         lblNome.setText("Nome");
 
-        txtNome.setText("jTextField1");
         txtNome.setPreferredSize(new java.awt.Dimension(360, 40));
 
         lblSobrenome.setText("Sobrenome");
 
-        txtLogin.setText("jTextField1");
         txtLogin.setPreferredSize(new java.awt.Dimension(360, 40));
 
         lblEmail.setText("E-mail");
 
-        txtEmail.setText("jTextField1");
         txtEmail.setPreferredSize(new java.awt.Dimension(360, 40));
 
         lblLogin.setText("Login");
 
-        txtSobrenome.setText("jTextField1");
         txtSobrenome.setPreferredSize(new java.awt.Dimension(360, 40));
 
         btnSalvar.setText("Salvar");

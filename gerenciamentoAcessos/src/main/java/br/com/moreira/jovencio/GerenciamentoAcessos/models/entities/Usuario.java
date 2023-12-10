@@ -13,8 +13,6 @@ import java.util.Set;
  */
 public class Usuario {
 
-	private boolean isCompleta;
-
 	private Integer id;
 
 	private String nome;
@@ -27,6 +25,8 @@ public class Usuario {
 
 	private String senha;
 
+	private String senhaConfirmacao;
+
 	private Set<String> permissoes;
 
 	private final LocalDateTime dataCadastro;
@@ -35,19 +35,16 @@ public class Usuario {
 
 	public Usuario() {
 		this.dataCadastro = LocalDateTime.now();
-		isCompleta = false;
 	}
 
 	public Usuario( int id ) {
 		this.dataCadastro = null;
 		this.id = id;
-		isCompleta = false;
 	}
 
 	public Usuario( int id, LocalDateTime dataCadastro ) {
 		this.dataCadastro = dataCadastro;
 		this.id = id;
-		isCompleta = false;
 	}
 
 	public Integer getId() {
@@ -56,7 +53,6 @@ public class Usuario {
 
 	public void setId( Integer id ) {
 		this.id = id;
-		updateIsCompleta();
 	}
 
 	public String getNome() {
@@ -65,7 +61,6 @@ public class Usuario {
 
 	public void setNome( String nome ) {
 		this.nome = nome;
-		updateIsCompleta();
 	}
 
 	public String getSobrenome() {
@@ -74,7 +69,6 @@ public class Usuario {
 
 	public void setSobrenome( String sobrenome ) {
 		this.sobrenome = sobrenome;
-		updateIsCompleta();
 	}
 
 	public String getLogin() {
@@ -83,7 +77,6 @@ public class Usuario {
 
 	public void setLogin( String login ) {
 		this.login = login;
-		updateIsCompleta();
 	}
 
 	public String getEmail() {
@@ -92,7 +85,6 @@ public class Usuario {
 
 	public void setEmail( String email ) {
 		this.email = email;
-		updateIsCompleta();
 	}
 
 	public String getSenha() {
@@ -101,7 +93,14 @@ public class Usuario {
 
 	public void setSenha( String senha ) {
 		this.senha = senha;
-		updateIsCompleta();
+	}
+
+	public String getSenhaConfirmacao() {
+		return senhaConfirmacao;
+	}
+
+	public void setSenhaConfirmacao( String senhaConfirmacao ) {
+		this.senhaConfirmacao = senhaConfirmacao;
 	}
 
 	public Set<String> getPermissoes() {
@@ -110,7 +109,6 @@ public class Usuario {
 
 	public void setPermissoes( Set<String> permissoes ) {
 		this.permissoes = permissoes;
-		updateIsCompleta();
 	}
 
 	public void addPermissao( String permissao ) {
@@ -121,7 +119,6 @@ public class Usuario {
 			this.permissoes = new HashSet<>();
 		}
 		this.permissoes.add( permissao );
-		updateIsCompleta();
 	}
 
 	public void addPermissoes( String... permissoes ) {
@@ -132,7 +129,6 @@ public class Usuario {
 			this.permissoes = new HashSet<>();
 		}
 		Arrays.stream( permissoes ).forEach( permissao -> this.addPermissao( permissao ) );
-		updateIsCompleta();
 	}
 
 	public LocalDateTime getDataCadastro() {
@@ -151,7 +147,14 @@ public class Usuario {
 		this.dataAutorizado = dataAutorizado;
 	}
 
-	private void updateIsCompleta() {
-		isCompleta = id != null && nome != null && sobrenome != null && login != null && senha != null && permissoes != null && dataCadastro != null;
+	public String getNomeCompleto() {
+		if( nome != null && sobrenome != null )
+			return nome + " " + sobrenome;
+		else if( nome != null )
+			return nome;
+		else if( sobrenome != null )
+			return sobrenome;
+		return "nome não preenchido";
 	}
+
 }

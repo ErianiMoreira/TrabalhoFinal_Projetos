@@ -15,4 +15,6 @@ public interface IUsuarioRepository {
 
 	public Usuario get( int id ) throws Exception;
 
+	public boolean isAutorizado( int id ) throws Exception;
+
 }

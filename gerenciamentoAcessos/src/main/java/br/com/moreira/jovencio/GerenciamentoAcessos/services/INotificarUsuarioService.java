@@ -22,4 +22,6 @@ public interface INotificarUsuarioService {
 	public ControllerRetorno validar( int usuarioDestinoId, String mensagem ) throws Exception;
 
 	public ControllerRetorno validar( int usuarioOrigemId, int usuarioDestinoId, String mensagem ) throws Exception;
+
+	public ControllerRetorno deletarNotificacoesByUsuario( int usuarioId );
 }

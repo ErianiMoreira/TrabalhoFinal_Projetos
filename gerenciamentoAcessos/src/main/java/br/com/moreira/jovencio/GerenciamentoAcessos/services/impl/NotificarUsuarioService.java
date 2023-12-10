@@ -11,6 +11,7 @@ import br.com.moreira.jovencio.GerenciamentoAcessos.services.INotificarUsuarioSe
 import br.com.moreira.jovencio.GerenciamentoAcessos.services.ValidarCampo;
 import java.util.ArrayList;
 import java.util.List;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -22,6 +23,7 @@ public class NotificarUsuarioService extends AbstractLogService implements INoti
 	private final INotificacaoDAO notificacaoDAO;
 
 	public NotificarUsuarioService() throws Exception {
+		super( LoggerFactory.getLogger( NotificarUsuarioService.class ) );
 		usuarioDao = DAOFactory.getDAOFactory().getUsuarioDAO();
 		notificacaoDAO = DAOFactory.getDAOFactory().getNotificacaoDAO();
 	}
@@ -70,6 +72,15 @@ public class NotificarUsuarioService extends AbstractLogService implements INoti
 	@Override
 	public ControllerRetorno validar( int usuarioDestinoId, String mensagem ) throws Exception {
 		return _validar( null, usuarioDestinoId, mensagem );
+	}
+
+	public ControllerRetorno deletarNotificacoesByUsuario( int usuarioId ) {
+		try {
+			notificacaoDAO.deletarNotificacoesByUsuario( usuarioId );
+			return new ControllerRetorno( 200 );
+		} catch ( Exception e ) {
+			return tratarErro( e );
+		}
 	}
 
 	@Override

@@ -25,12 +25,12 @@ public class SQLiteDAOFactory extends DAOFactory {
 
 	@Override
 	public IUsuarioDAO getUsuarioDAO() {
-		return new UsuarioDAO();
+		return UsuarioDAO.getInstancia();
 	}
 
 	@Override
 	public INotificacaoDAO getNotificacaoDAO() {
-		return new NotificacaoDAO();
+		return NotificacaoDAO.getInstancia();
 	}
 
 }

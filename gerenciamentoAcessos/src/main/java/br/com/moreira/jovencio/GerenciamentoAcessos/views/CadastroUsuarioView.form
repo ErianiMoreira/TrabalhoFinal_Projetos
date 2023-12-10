@@ -27,34 +27,23 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
-              <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
+              <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="lblNome" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="txtNome" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="lblSobrenome" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="txtSobrenome" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="lblEmail" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="txtEmail" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="lblLogin" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="txtLogin" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="lblSenha" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="lblConfirmarSenha" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="pswSenha" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="pswConfirmarSenha" alignment="0" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <Component id="btnCancelar" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
-                  </Group>
+                  <Component id="lblNome" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="txtNome" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblSobrenome" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="txtSobrenome" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblEmail" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="txtEmail" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblLogin" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="txtLogin" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblSenha" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblConfirmarSenha" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="pswSenha" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="pswConfirmarSenha" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnCancelar" alignment="0" max="-2" attributes="0"/>
+                  <Component id="btnCadastrar" alignment="0" min="-2" max="-2" attributes="0"/>
               </Group>
-          </Group>
-          <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
-              <Component id="btnCadastrar" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
           </Group>
       </Group>

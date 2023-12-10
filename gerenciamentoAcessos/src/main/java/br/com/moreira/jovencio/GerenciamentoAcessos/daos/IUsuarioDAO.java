@@ -3,13 +3,14 @@ package br.com.moreira.jovencio.GerenciamentoAcessos.daos;
 
 import br.com.moreira.jovencio.GerenciamentoAcessos.models.dtos.UsuarioGridDTO;
 import br.com.moreira.jovencio.GerenciamentoAcessos.models.entities.Usuario;
+import br.com.moreira.jovencio.GerenciamentoAcessos.observers.usuario.IUsuarioDAOObservavel;
 import java.util.List;
 
 /**
  *
  * @author marlan
  */
-public interface IUsuarioDAO {
+public interface IUsuarioDAO extends IUsuarioDAOObservavel {
 
 	public void createTable() throws Exception;
 
@@ -23,10 +24,16 @@ public interface IUsuarioDAO {
 
 	public Usuario findByLoginAndSenha( String login, String senha ) throws Exception;
 
-	public boolean existeUsuarioComLogin( String login ) throws Exception;
+	public Usuario findUsuarioComLogin( String login ) throws Exception;
 
 	public int getCountUsuarios() throws Exception;
 
 	public List<UsuarioGridDTO> search( String nome, Boolean possuiNotificacoes ) throws Exception;
+
+	public void autorizar( int id ) throws Exception;
+
+	public void alterarSenha( int id, String senha ) throws Exception;
+
+	public void resetarSenha( int id ) throws Exception;
 
 }

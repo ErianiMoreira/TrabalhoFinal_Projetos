@@ -1,12 +1,14 @@
 
 package br.com.moreira.jovencio.GerenciamentoAcessos.presenters;
 
+import br.com.moreira.jovencio.GerenciamentoAcessos.factories.logs.LogFactory;
 import br.com.moreira.jovencio.GerenciamentoAcessos.models.dtos.ControllerRetorno;
-import br.com.moreira.jovencio.GerenciamentoAcessos.models.dtos.UsuarioCadastroDTO;
+import br.com.moreira.jovencio.GerenciamentoAcessos.models.entities.Usuario;
 import br.com.moreira.jovencio.GerenciamentoAcessos.services.INotificarPoPopupService;
 import br.com.moreira.jovencio.GerenciamentoAcessos.services.ValidarCampo;
-import br.com.moreira.jovencio.GerenciamentoAcessos.services.impl.NotificarPoPopupService;
 import br.com.moreira.jovencio.GerenciamentoAcessos.services.impl.CadastrarUsuarioService;
+import br.com.moreira.jovencio.GerenciamentoAcessos.services.impl.NotificarPoPopupService;
+import br.com.moreira.jovencio.GerenciamentoAcessos.services.impl.ValidarDadosUsuarioCadastroLogin;
 import br.com.moreira.jovencio.GerenciamentoAcessos.views.CadastroUsuarioView;
 
 /**
@@ -15,10 +17,12 @@ import br.com.moreira.jovencio.GerenciamentoAcessos.views.CadastroUsuarioView;
  */
 public class CadastroUsuarioPresenter {
 
+	private final LogarPresenter parent;
 	private final CadastroUsuarioView view;
 	private final INotificarPoPopupService popup;
 
-	public CadastroUsuarioPresenter() {
+	public CadastroUsuarioPresenter( LogarPresenter parent ) {
+		this.parent = parent;
 		view = new CadastroUsuarioView();
 		configurarView();
 		popup = new NotificarPoPopupService( view );
@@ -32,23 +36,26 @@ public class CadastroUsuarioPresenter {
 			}
 		}
 		view.getBtnCadastrar().addActionListener( ae -> cadastrar() );
+		view.getBtnCancelar().addActionListener( ae -> cancelar() );
 	}
 
 	private void cadastrar() {
-		if( !validarSenhas() ) {
-			return;
-		}
-		var dto = new UsuarioCadastroDTO();
+		var dto = new Usuario();
 		dto.setNome( view.getTxtNome().getText() );
 		dto.setSobrenome( view.getTxtSobrenome().getText() );
 		dto.setEmail( view.getTxtEmail().getText() );
 		dto.setLogin( view.getTxtLogin().getText() );
 		dto.setSenha( String.valueOf( view.getPswConfirmarSenha().getPassword() ) );
+		dto.setSenhaConfirmacao( String.valueOf( view.getPswConfirmarSenha().getPassword() ) );
 		ControllerRetorno retorno;
 		try {
-			retorno = new CadastrarUsuarioService().cadastrar( dto );
+			retorno = new CadastrarUsuarioService( new ValidarDadosUsuarioCadastroLogin() ).cadastrar( dto );
 		} catch ( Exception ex ) {
-			// TODO: tratar erro
+			try {
+				LogFactory.getLOGFactory().getLogService().registrarFalha( ex.getMessage(), "cadastrar da CadastroUsuarioPresenter", 0 );
+			} catch ( Exception ex1 ) {
+				ex1.printStackTrace();
+			}
 			return;
 		}
 		if( !retorno.isSuccess() ) {
@@ -59,14 +66,24 @@ public class CadastroUsuarioPresenter {
 		PrincipalPresenter.getInstancia().show( retorno.getEntidadeId() );
 	}
 
-	private boolean validarSenhas() {
-		var senha = String.valueOf( view.getPswSenha().getPassword() );
-		var confirmarSenha = String.valueOf( view.getPswConfirmarSenha().getPassword() );
-		if( ( ValidarCampo.isNotNullVazioOrEspacos( senha ) || ValidarCampo.isNotNullVazioOrEspacos( confirmarSenha ) ) && senha.compareTo( confirmarSenha ) != 0 ) {
-			popup.showPopupOk( "Senhas incompativeis", "O Campo 'Senha' e o campo 'Confirmar Senha' não estão preenchidos com o mesmo valor!", "erro" );
-			return false;
+	private void cancelar() {
+		if( !temCampoPreenchido() || popup.showPopupConfirm( "Alterações não salvas", "Há alterações não salvas, deseja realmente sair da tela?" ) ) {
+			view.setVisible( false );
+			parent.show();
 		}
-		return true;
+	}
+
+	private boolean temCampoPreenchido() {
+		return ValidarCampo.isNotNullVazioOrEspacos( view.getTxtNome().getText() ) //
+				|| ValidarCampo.isNotNullVazioOrEspacos( view.getTxtSobrenome().getText() ) //
+				|| ValidarCampo.isNotNullVazioOrEspacos( view.getTxtEmail().getText() ) //
+				|| ValidarCampo.isNotNullVazioOrEspacos( view.getTxtLogin().getText() ) //
+				|| ValidarCampo.isNotNullVazioOrEspacos( String.valueOf( view.getPswSenha().getPassword() ) ) //
+				|| ValidarCampo.isNotNullVazioOrEspacos( String.valueOf( view.getPswConfirmarSenha().getPassword() ) );
+	}
+
+	void show() {
+		view.setVisible( true );
 	}
 
 }

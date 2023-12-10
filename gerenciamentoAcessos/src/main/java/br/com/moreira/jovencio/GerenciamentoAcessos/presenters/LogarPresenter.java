@@ -15,7 +15,7 @@ public class LogarPresenter {
 
 	private final LogarView view;
 	private CadastroUsuarioPresenter cadastroUsuarioPresenter;
-	private ILoginService loginService;
+	private final ILoginService loginService;
 
 	public LogarPresenter() throws Exception {
 		view = new LogarView();
@@ -48,8 +48,13 @@ public class LogarPresenter {
 	private void cadastrar() {
 		view.setVisible( false );
 		if( cadastroUsuarioPresenter == null ) {
-			cadastroUsuarioPresenter = new CadastroUsuarioPresenter();
+			cadastroUsuarioPresenter = new CadastroUsuarioPresenter( this );
 		}
+		cadastroUsuarioPresenter.show();
+	}
+
+	void show() {
+		view.setVisible( true );
 	}
 
 }

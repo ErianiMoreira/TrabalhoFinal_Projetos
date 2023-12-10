@@ -1,6 +1,7 @@
 
 package br.com.moreira.jovencio.GerenciamentoAcessos.presenters;
 
+import br.com.moreira.jovencio.GerenciamentoAcessos.factories.logs.LogFactory;
 import br.com.moreira.jovencio.GerenciamentoAcessos.models.entities.Usuario;
 import br.com.moreira.jovencio.GerenciamentoAcessos.services.INotificarPoPopupService;
 import br.com.moreira.jovencio.GerenciamentoAcessos.services.INotificarUsuarioService;
@@ -68,6 +69,12 @@ public class NotificarUsuarioPresenter {
 			view.setVisible( true );
 			view.setSelected( true );
 		} catch ( PropertyVetoException ex ) {
+			try {
+				LogFactory.getLOGFactory().getLogService().registrarFalha( ex.getMessage(), "expandir da  NotificarUsuarioPresenter", deUsuarioId );
+			} catch ( Exception ex1 ) {
+				ex1.printStackTrace();
+			}
+			ex.printStackTrace();
 		}
 	}
 
@@ -84,4 +91,5 @@ public class NotificarUsuarioPresenter {
 			}
 		};
 	}
+
 }
