@@ -46,7 +46,7 @@ public class AlterarSenhaPresenter {
 		var confirmacao = String.valueOf( view.getPswConfirmarNovaSenha().getPassword() );
 		ControllerRetorno validar = cadastrarUsuarioService.alterarSenha( usuarioLogadoId, senha, confirmacao );
 		if( validar.isSuccess() ) {
-			notificarPopUp.showPopupOk( "Alteração de senha", "Senha auterada com sucesso", null );
+			notificarPopUp.showPopupOk( "Alteração de senha", "Senha Alterada com sucesso", null );
 			close();
 		} else {
 			notificarPopUp.showPopupOk( validar.isError() ? "Erro" : "Alerta", validar.getMensagem(), validar.isError() ? "Erro" : "Alerta" );
